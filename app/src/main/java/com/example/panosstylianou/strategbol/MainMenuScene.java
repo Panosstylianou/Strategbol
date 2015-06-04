@@ -68,8 +68,8 @@ public class MainMenuScene extends BaseScene{
         menuChildScene.buildAnimations();
         menuChildScene.setBackgroundEnabled(false);
 
-        playMenuItem.setPosition(super.getOffsetCenterX(), playMenuItem.getY()-150);
-        optionsMenuItem.setPosition(super.getOffsetCenterX(), optionsMenuItem.getY()-250);
+        playMenuItem.setPosition(super.getOffsetCenterX(), playMenuItem.getY()-270);
+        optionsMenuItem.setPosition(super.getOffsetCenterX(), optionsMenuItem.getY()-310);
 
         //menuChildScene.setOnMenuItemClickListener(this);
 
