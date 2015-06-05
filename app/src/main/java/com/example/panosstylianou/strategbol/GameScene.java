@@ -31,9 +31,9 @@ import org.andengine.util.level.EntityLoader;
 import org.andengine.util.level.constants.LevelConstants;
 import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
 import org.andengine.util.level.simple.SimpleLevelLoader;
+import org.xml.sax.Attributes;
 
 import java.io.IOException;
-import java.util.jar.Attributes;
 
 
 public class GameScene extends BaseScene{
@@ -43,7 +43,8 @@ public class GameScene extends BaseScene{
 
         createBackground();
         createHUD();
-//      createPhysics();
+        createPhysics();
+        loadLevel(1);
 
     }
 
@@ -107,19 +108,19 @@ public class GameScene extends BaseScene{
         registerUpdateHandler(physicsWorld);
     }
 
-/*
+
 
     private static final String TAG_ENTITY = "entity";
     private static final String TAG_ENTITY_ATTRIBUTE_X = "x";
     private static final String TAG_ENTITY_ATTRIBUTE_Y = "y";
     private static final String TAG_ENTITY_ATTRIBUTE_TYPE = "type";
 
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLATFORM1 = "player1";
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLATFORM2 = "player2";
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLATFORM3 = "player3";
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN = "football";
+    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER1 = "player1";
+    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER2 = "player2";
+    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER3 = "player3";
+    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL = "football";
 
-/*
+
     private void loadLevel(int levelID)
     {
         final SimpleLevelLoader levelLoader = new SimpleLevelLoader(vbom);
@@ -127,7 +128,7 @@ public class GameScene extends BaseScene{
         final FixtureDef FIXTURE_DEF = PhysicsFactory.createFixtureDef(0, 0.01f, 0.5f);
 
         levelLoader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(LevelConstants.TAG_LEVEL)
-        {
+        {   //The entity where all loaded entities are attached to
             public IEntity onLoadEntity(final String pEntityName, final IEntity pParent, final Attributes pAttributes, final SimpleLevelEntityLoaderData pSimpleLevelEntityLoaderData) throws IOException
             {
                 final int width = SAXUtils.getIntAttributeOrThrow(pAttributes, LevelConstants.TAG_LEVEL_ATTRIBUTE_WIDTH);
@@ -143,6 +144,7 @@ public class GameScene extends BaseScene{
 
         levelLoader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(TAG_ENTITY)
         {
+
             public IEntity onLoadEntity(final String pEntityName, final IEntity pParent, final Attributes pAttributes, final SimpleLevelEntityLoaderData pSimpleLevelEntityLoaderData) throws IOException
             {
                 final int x = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_X);
@@ -151,26 +153,27 @@ public class GameScene extends BaseScene{
 
                 final Sprite levelObject;
 
-                if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLATFORM1))
+                //Parse XML files
+                if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER1))
                 {
                     levelObject = new Sprite(x, y, resourcesManager.player1_region, vbom);
-                    PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyDef.BodyType.StaticBody, FIXTURE_DEF).setUserData("platform1");
+                    PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyDef.BodyType.StaticBody, FIXTURE_DEF).setUserData("player1");
                 }
-                else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLATFORM2))
+                else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER2))
                 {
                     levelObject = new Sprite(x, y, resourcesManager.player2_region, vbom);
                     final Body body = PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyDef.BodyType.StaticBody, FIXTURE_DEF);
-                    body.setUserData("platform2");
+                    body.setUserData("player2");
                     physicsWorld.registerPhysicsConnector(new PhysicsConnector(levelObject, body, true, false));
                 }
-                else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLATFORM3))
+                else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER3))
                 {
                     levelObject = new Sprite(x, y, resourcesManager.player3_region, vbom);
                     final Body body = PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyDef.BodyType.StaticBody, FIXTURE_DEF);
-                    body.setUserData("platform3");
+                    body.setUserData("player3");
                     physicsWorld.registerPhysicsConnector(new PhysicsConnector(levelObject, body, true, false));
                 }
-                else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_COIN))
+                else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL))
                 {
                     levelObject = new Sprite(x, y, resourcesManager.football_region, vbom)
                     {
@@ -184,7 +187,7 @@ public class GameScene extends BaseScene{
                              * we will later check if player collide with this (coin)
                              * and if it does, we will increase score and hide coin
                              * it will be completed in next articles (after creating player code)
-
+                            */
                         }
                     };
                     levelObject.registerEntityModifier(new LoopEntityModifier(new ScaleModifier(1, 1, 1.3f)));
@@ -203,7 +206,6 @@ public class GameScene extends BaseScene{
         levelLoader.loadLevelFromAsset(activity.getAssets(), "level/" + levelID + ".lvl");
     }
 
-    */
 
 
 }
