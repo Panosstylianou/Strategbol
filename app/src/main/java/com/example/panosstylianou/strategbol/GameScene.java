@@ -64,7 +64,7 @@ public class GameScene extends BaseScene{
     public void disposeScene() {
 
         camera.setHUD(null);
-        camera.setCenter(400, 240);
+        camera.setCenter(240, 400);
 
         // TODO code responsible for disposing scene
         // removing all game scene objects.
@@ -83,7 +83,7 @@ public class GameScene extends BaseScene{
         gameHUD = new HUD();
 
         // CREATE SCORE TEXT
-        scoreText = new Text(20, 420, resourcesManager.font, "Score: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom); //Initialize text with all characters that are going to be used to prepare memory
+        scoreText = new Text(20, 740, resourcesManager.font, "Score: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom); //Initialize text with all characters that are going to be used to prepare memory
         scoreText.setAnchorCenter(0, 0);
         scoreText.setText("Score: 0");
         gameHUD.attachChild(scoreText); //Attach Score Text to HUD

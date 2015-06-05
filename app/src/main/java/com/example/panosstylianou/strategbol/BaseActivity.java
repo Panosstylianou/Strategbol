@@ -11,6 +11,7 @@ import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
+import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
@@ -47,17 +48,19 @@ public class BaseActivity extends BaseGameActivity
 
     private ResourcesManager resourcesManager;
     @Override
-    public Engine onCreateEngine(EngineOptions pEngineOptions)
-    {
+    public Engine onCreateEngine(EngineOptions pEngineOptions) {
         return new LimitedFPSEngine(pEngineOptions, 60);    //Create an Engine with a 60 second updates.
     }
 
+    //int width = this.getResources().getDisplayMetrics().widthPixels;
+    //int height = this.getResources().getDisplayMetrics().heightPixels;
 
     private Camera camera;
+
     public EngineOptions onCreateEngineOptions()
     {
-        camera = new Camera(0,0,800,480);   //Set camera size 800x480
-        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new RatioResolutionPolicy(480,800), this.camera); //Set orientation Portrait
+        camera = new Camera(0, 0, 480, 800);   //Set camera size 800x480
+        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new FillResolutionPolicy(), this.camera); //Set orientation Portrait
         engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);    //Set audio
         engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
         return engineOptions;

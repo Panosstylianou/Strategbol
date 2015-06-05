@@ -23,7 +23,7 @@ public class OptionScene extends BaseScene {
 
         createBackground();
         createHUD();
-//      createPhysics();
+
     }
 
     @Override
@@ -39,7 +39,7 @@ public class OptionScene extends BaseScene {
     public void disposeScene() {
 
         camera.setHUD(null);
-        camera.setCenter(400, 240);
+        camera.setCenter(240, 400);
 
         // TODO code responsible for disposing scene
         // removing all game scene objects.
@@ -58,7 +58,7 @@ public class OptionScene extends BaseScene {
         optionsHUD = new HUD();
 
         // CREATE SCORE TEXT
-        optionsText = new Text(20, 420, resourcesManager.font, "Options Menu", new TextOptions(HorizontalAlign.CENTER), vbom); //Initialize text with all characters that are going to be used to prepare memory
+        optionsText = new Text(20, 740, resourcesManager.font, "Options Menu", new TextOptions(HorizontalAlign.CENTER), vbom); //Initialize text with all characters that are going to be used to prepare memory
         optionsText.setAnchorCenter(0, 0);
         //optionsText.setText("Hi");
         optionsHUD.attachChild(optionsText); //Attach Options Text to HUD
@@ -67,13 +67,6 @@ public class OptionScene extends BaseScene {
 
         camera.setHUD(optionsHUD);
 
-    }
-
-    private PhysicsWorld physicsWorld;
-
-        private void createPhysics(){
-        physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0,-17), false);    //Create Physics World with  60 steps per second
-        registerUpdateHandler(physicsWorld);
     }
 
 }
