@@ -130,10 +130,8 @@ public class SceneManager
 
     public void loadGameScene(final Engine mEngine){    //Load Game Resources while displaying Loading Scene
 
-
         setScene(loadingScene);
         ResourcesManager.getInstance().unloadMenuTextures();
-
 
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 
@@ -149,9 +147,9 @@ public class SceneManager
     }
 
     public void loadMenuScene(final Engine mEngine){
+
         setScene(loadingScene);
-        gameScene.disposeScene();
-        ResourcesManager.getInstance().unloadGameTextures();
+
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
             public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);

@@ -29,6 +29,7 @@ public class OptionScene extends BaseScene {
     @Override
     public void onBackKeyPressed() {
         SceneManager.getInstance().loadMenuScene(engine);
+        this.disposeScene();
     }
 
     @Override
