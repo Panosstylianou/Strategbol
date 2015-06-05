@@ -107,8 +107,7 @@ public class GameScene extends BaseScene{
         registerUpdateHandler(physicsWorld);
     }
 
-<<<<<<< Updated upstream
-=======
+/*
 
     private static final String TAG_ENTITY = "entity";
     private static final String TAG_ENTITY_ATTRIBUTE_X = "x";
@@ -207,5 +206,4 @@ public class GameScene extends BaseScene{
     */
 
 
->>>>>>> Stashed changes
 }
