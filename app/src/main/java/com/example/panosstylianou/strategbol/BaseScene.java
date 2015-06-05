@@ -47,7 +47,8 @@ public abstract class BaseScene extends Scene   //Basic representation of each c
 
     public abstract void onBackKeyPressed();
 
-    public abstract SceneType getSceneType();
+    public abstract SceneType getSceneType(
+    );
 
     public abstract void disposeScene();
 }

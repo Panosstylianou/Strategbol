@@ -80,9 +80,6 @@ public class ResourcesManager
 
     private void loadOptionGraphics()
     {
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/option/");
-        optionTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
-        option_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(optionTextureAtlas, activity, "optionBackground.png");
 
     }
 

@@ -167,12 +167,10 @@ public class SceneManager
 
     }
 
-    public void loadOptionScene(final Engine mEngine) {    //Load Game Resources while displaying Loading Scene
+    public void loadOptionScene(final Engine mEngine) {    //Load Option Resources
 
-
-        setScene(optionScene);
+        setScene(loadingScene);
         ResourcesManager.getInstance().unloadMenuTextures();
-
 
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
 
