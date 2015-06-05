@@ -1,13 +1,10 @@
 package com.example.panosstylianou.strategbol;
 
-import com.badlogic.gdx.math.Vector2;
 import com.example.panosstylianou.strategbol.SceneManager.SceneType;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
-import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
-import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.adt.color.Color;
 

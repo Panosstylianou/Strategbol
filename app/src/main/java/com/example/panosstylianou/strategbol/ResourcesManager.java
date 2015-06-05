@@ -58,6 +58,7 @@ public class ResourcesManager
     public ITextureRegion player2_region;
     public ITextureRegion player3_region;
     public ITextureRegion football_region;
+    public ITextureRegion pitch_region;
 
     public ITiledTextureRegion player_region;
 
@@ -143,6 +144,7 @@ public class ResourcesManager
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
         gameTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
 
+        pitch_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "pitch.png");
         player1_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "coin.png");
         player2_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "coin.png");
         player3_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "coin.png");

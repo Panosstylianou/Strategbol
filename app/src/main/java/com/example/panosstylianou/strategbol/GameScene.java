@@ -24,6 +24,7 @@ import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
+import org.andengine.opengl.util.GLState;
 import org.andengine.util.SAXUtils;
 import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.adt.color.Color;
@@ -72,8 +73,17 @@ public class GameScene extends BaseScene{
     }
 
     private void createBackground(){
-        setBackground(new Background(Color.GREEN)); //Set the background for the Game Scene
-    }
+        {   //Create a new sprite in the middle of the screen for the background
+            attachChild(new Sprite(240, 400, resourcesManager.pitch_region, vbom)
+            {
+                @Override
+                protected void preDraw(GLState pGLState, Camera pCamera)
+                {
+                    super.preDraw(pGLState, pCamera);
+                    pGLState.enableDither();
+                }
+            });
+        }    }
 
     private HUD gameHUD;
     private Text scoreText;
@@ -156,26 +166,26 @@ public class GameScene extends BaseScene{
                 //Parse XML files
                 if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER1))
                 {
-                    levelObject = new Sprite(x, y, resourcesManager.player1_region, vbom);
+                    levelObject = new Sprite(y, x, resourcesManager.player1_region, vbom);
                     PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyDef.BodyType.StaticBody, FIXTURE_DEF).setUserData("player1");
                 }
                 else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER2))
                 {
-                    levelObject = new Sprite(x, y, resourcesManager.player2_region, vbom);
+                    levelObject = new Sprite(y, x, resourcesManager.player2_region, vbom);
                     final Body body = PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyDef.BodyType.StaticBody, FIXTURE_DEF);
                     body.setUserData("player2");
                     physicsWorld.registerPhysicsConnector(new PhysicsConnector(levelObject, body, true, false));
                 }
                 else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER3))
                 {
-                    levelObject = new Sprite(x, y, resourcesManager.player3_region, vbom);
+                    levelObject = new Sprite(y, x, resourcesManager.player3_region, vbom);
                     final Body body = PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyDef.BodyType.StaticBody, FIXTURE_DEF);
                     body.setUserData("player3");
                     physicsWorld.registerPhysicsConnector(new PhysicsConnector(levelObject, body, true, false));
                 }
                 else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL))
                 {
-                    levelObject = new Sprite(x, y, resourcesManager.football_region, vbom)
+                    levelObject = new Sprite(y, x, resourcesManager.football_region, vbom)
                     {
                         @Override
                         protected void onManagedUpdate(float pSecondsElapsed)
