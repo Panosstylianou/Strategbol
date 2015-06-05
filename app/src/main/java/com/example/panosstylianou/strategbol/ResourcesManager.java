@@ -4,6 +4,7 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import org.andengine.opengl.texture.TextureOptions;
@@ -57,6 +58,8 @@ public class ResourcesManager
     public ITextureRegion player2_region;
     public ITextureRegion player3_region;
     public ITextureRegion football_region;
+
+    public ITiledTextureRegion player_region;
 
     //---------------------------------------------
     // TEXTURES & TEXTURE REGIONS
@@ -144,6 +147,9 @@ public class ResourcesManager
         player2_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "coin.png");
         player3_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "coin.png");
         football_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "coin.png");
+
+        player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas, activity, "player.png", 3, 1);
+
 
         try
         {
