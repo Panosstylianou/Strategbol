@@ -24,6 +24,7 @@ public class SceneManager
     private BaseScene menuScene;
     private BaseScene gameScene;
     private BaseScene loadingScene;
+    private BaseScene optionScene;
 
     //---------------------------------------------
     // VARIABLES
@@ -47,6 +48,7 @@ public class SceneManager
         SCENE_MENU,
         SCENE_GAME,
         SCENE_LOADING,
+        SCENE_OPTIONS,
     }
 
     //---------------------------------------------
@@ -75,6 +77,9 @@ public class SceneManager
                 break;
             case SCENE_LOADING:
                 setScene(loadingScene);
+                break;
+            case SCENE_OPTIONS:
+                setScene(optionScene);
                 break;
             default:
                 break;
@@ -151,10 +156,8 @@ public class SceneManager
         setScene(loadingScene);
         gameScene.disposeScene();
         ResourcesManager.getInstance().unloadGameTextures();
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
-        {
-            public void onTimePassed(final TimerHandler pTimerHandler)
-            {
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadMenuTextures();
                 setScene(menuScene);
@@ -163,4 +166,25 @@ public class SceneManager
 
 
     }
+
+    public void loadOptionScene(final Engine mEngine) {    //Load Game Resources while displaying Loading Scene
+
+
+        setScene(optionScene);
+        ResourcesManager.getInstance().unloadMenuTextures();
+
+
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+
+            public void onTimePassed(TimerHandler pTimerHandler) {
+
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadOptionResources();
+                optionScene = new OptionScene();
+                setScene(optionScene);
+            }
+        }));
+
+    }
+
 }

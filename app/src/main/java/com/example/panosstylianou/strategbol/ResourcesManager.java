@@ -6,11 +6,6 @@ import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import org.andengine.engine.*;
-import org.andengine.engine.camera.Camera;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.engine.Engine;
-import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -19,11 +14,8 @@ import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSourc
 import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
-
-import com.example.panosstylianou.strategbol.BaseActivity;
 
 /**
  * @author Mateusz Mysliwiec
@@ -48,12 +40,14 @@ public class ResourcesManager
 
 
     public ITextureRegion menu_background_region;
+    public ITextureRegion option_background_region;
     public ITextureRegion play_region;
     public ITextureRegion options_region;
 
     public Font font;
 
     private BuildableBitmapTextureAtlas menuTextureAtlas;
+    private BuildableBitmapTextureAtlas optionTextureAtlas;
 
     //---------------------------------------------
     // TEXTURES & TEXTURE REGIONS
@@ -75,6 +69,31 @@ public class ResourcesManager
         loadGameGraphics();
         loadGameFonts();
         loadGameAudio();
+    }
+
+    public void loadOptionResources()
+    {
+        loadOptionGraphics();
+        loadOptionAudio();
+        loadOptionFonts();
+    }
+
+    private void loadOptionGraphics()
+    {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/option/");
+        optionTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+        option_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(optionTextureAtlas, activity, "optionBackground.png");
+
+    }
+
+    private void loadOptionFonts()
+    {
+
+    }
+
+    private void loadOptionAudio()
+    {
+
     }
 
     private void loadMenuGraphics()

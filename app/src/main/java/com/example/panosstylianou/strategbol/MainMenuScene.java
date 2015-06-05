@@ -97,6 +97,8 @@ public class MainMenuScene extends BaseScene{
                 SceneManager.getInstance().loadGameScene(engine);
                 return true;
             case MENU_OPTIONS:
+                //Load Options Scene
+                SceneManager.getInstance().loadOptionScene(engine);
                 return true;
             default:
                 return false;
