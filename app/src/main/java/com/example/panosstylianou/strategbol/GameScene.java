@@ -50,9 +50,9 @@ public class GameScene extends BaseScene{
 
     @Override
     public void onBackKeyPressed() {
-
         SceneManager.getInstance().loadMenuScene(engine);
-
+        ResourcesManager.getInstance().unloadGameTextures();
+        this.disposeScene();
     }
 
     @Override
@@ -203,7 +203,7 @@ public class GameScene extends BaseScene{
             }
         });
 
-        levelLoader.loadLevelFromAsset(activity.getAssets(), "level/" + levelID + ".lvl");
+        levelLoader.loadLevelFromAsset(activity.getAssets(), "level/"+levelID+".xml" );
     }
 
 
