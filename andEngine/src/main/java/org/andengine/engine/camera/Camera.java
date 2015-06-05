@@ -63,6 +63,8 @@ public class Camera implements IUpdateHandler {
 		this.set(pX, pY, pX + pWidth, pY + pHeight);
 	}
 
+
+
 	// ===========================================================
 	// Getter & Setter
 	// ===========================================================
@@ -170,6 +172,7 @@ public class Camera implements IUpdateHandler {
 	}
 
 	public void setHUD(final HUD pHUD) {
+
 		this.mHUD = pHUD;
 		if (pHUD != null) {
 			pHUD.setCamera(this);

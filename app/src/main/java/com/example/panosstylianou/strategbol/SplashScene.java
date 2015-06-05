@@ -23,12 +23,12 @@ public class SplashScene extends BaseScene
     public void createScene()
     {
         splash = new Sprite(0, 0, resourcesManager.splash_region, vbom)
-        {
+        {   //Initializing the sprite - Attached in the middle of the screen
             @Override
             protected void preDraw(GLState pGLState, Camera pCamera)
             {
                 super.preDraw(pGLState, pCamera);
-                pGLState.enableDither();
+                pGLState.enableDither();    //Dither Enabled - Improves quality - Gradient based art
             }
         };
 

@@ -1,5 +1,8 @@
 package com.example.panosstylianou.strategbol;
 
+import android.view.KeyEvent;
+import android.view.View;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
@@ -38,7 +41,7 @@ public class MainMenuScene extends BaseScene{
     }
 
     private void createBackground()
-    {
+    {   //Create a new sprite in the middle of the screen for the background
         attachChild(new Sprite(400, 240, resourcesManager.menu_background_region, vbom)
         {
             @Override
@@ -56,12 +59,12 @@ public class MainMenuScene extends BaseScene{
 
     private void createMenuChildScene()
     {
-        menuChildScene = new MenuScene(camera);
+        menuChildScene = new MenuScene(camera); //Built-in AndEngine MenuScene class
         menuChildScene.setPosition(400, 240);
-
+        //Create menu buttons with ScaleMenuItemDecorator to make then animated - Could be changed
         final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 1.2f, 1);
         final IMenuItem optionsMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_OPTIONS, resourcesManager.options_region, vbom), 1.2f, 1);
-
+        //Adding to scene
         menuChildScene.addMenuItem(playMenuItem);
         menuChildScene.addMenuItem(optionsMenuItem);
 
@@ -70,6 +73,15 @@ public class MainMenuScene extends BaseScene{
 
         playMenuItem.setPosition(super.getOffsetCenterX(), playMenuItem.getY()-270);
         optionsMenuItem.setPosition(super.getOffsetCenterX(), optionsMenuItem.getY()-310);
+
+        menuChildScene.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
+                MainMenuScene.this.onMenuItemClicked(pMenuScene, pMenuItem, pMenuItemLocalX, pMenuItemLocalY);
+                return true;
+            }
+        });
+
 
         //menuChildScene.setOnMenuItemClickListener(this);
 
@@ -81,6 +93,8 @@ public class MainMenuScene extends BaseScene{
         switch(pMenuItem.getID())
         {
             case MENU_PLAY:
+                //Load Game Scene
+                SceneManager.getInstance().loadGameScene(engine);
                 return true;
             case MENU_OPTIONS:
                 return true;

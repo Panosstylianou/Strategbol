@@ -1,6 +1,9 @@
 package com.example.panosstylianou.strategbol;
 
 import org.andengine.engine.camera.Camera;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import org.andengine.engine.*;
@@ -17,6 +20,7 @@ import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtla
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 
 import com.example.panosstylianou.strategbol.BaseActivity;
@@ -47,6 +51,8 @@ public class ResourcesManager
     public ITextureRegion play_region;
     public ITextureRegion options_region;
 
+    public Font font;
+
     private BuildableBitmapTextureAtlas menuTextureAtlas;
 
     //---------------------------------------------
@@ -61,6 +67,7 @@ public class ResourcesManager
     {
         loadMenuGraphics();
         loadMenuAudio();
+        loadMenuFonts();
     }
 
     public void loadGameResources()
@@ -88,6 +95,14 @@ public class ResourcesManager
             Debug.e(e);
         }
 
+    }
+
+    private void loadMenuFonts(){
+        FontFactory.setAssetBasePath("Aller/");
+        final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+        font = FontFactory.createStrokeFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), "Aller_Rg.ttf", 50, true, Color.WHITE, 2, Color.BLACK);
+        font.load();
     }
 
     private void loadMenuAudio()
@@ -150,6 +165,18 @@ public class ResourcesManager
     public static ResourcesManager getInstance()
     {
         return INSTANCE;
+    }
+
+    public void unloadMenuTextures(){
+        menuTextureAtlas.unload();
+    }
+
+    public void loadMenuTextures(){
+        menuTextureAtlas.load();
+    }
+
+    public void unloadGameTextures(){
+        //
     }
 }
 

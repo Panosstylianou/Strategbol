@@ -1,6 +1,7 @@
 package com.example.panosstylianou.strategbol;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.LimitedFPSEngine;
@@ -48,22 +49,22 @@ public class BaseActivity extends BaseGameActivity
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions)
     {
-        return new LimitedFPSEngine(pEngineOptions, 60);
+        return new LimitedFPSEngine(pEngineOptions, 60);    //Create an Engine with a 60 second updates.
     }
 
 
     private Camera camera;
     public EngineOptions onCreateEngineOptions()
     {
-        camera = new Camera(0,0,800,480);
-        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(800, 480), this.camera);
-        engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
+        camera = new Camera(0,0,800,480);   //Set camera size 800x480
+        EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_FIXED, new RatioResolutionPolicy(800, 480), this.camera); //Set orientation Landscape
+        engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);    //Set audio
         engineOptions.setWakeLockOptions(WakeLockOptions.SCREEN_ON);
         return engineOptions;
 
     }
 
-    public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException
+    public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException //Initialize resources Manager and pass the parameters
     {
         ResourcesManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager());
         resourcesManager = ResourcesManager.getInstance();
@@ -94,4 +95,19 @@ public class BaseActivity extends BaseGameActivity
         pOnPopulateSceneCallback.onPopulateSceneFinished();
 
     }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        System.exit(0);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            SceneManager.getInstance().getCurrentScene().onBackKeyPressed();
+        }
+        return false;
+    }
+
 }

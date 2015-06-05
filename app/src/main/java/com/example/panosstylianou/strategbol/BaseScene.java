@@ -13,7 +13,7 @@ import com.example.panosstylianou.strategbol.SceneManager.SceneType;
  * @author www.matim-dev.com
  * @version 1.0
  */
-public abstract class BaseScene extends Scene
+public abstract class BaseScene extends Scene   //Basic representation of each created scene
 {
     //---------------------------------------------
     // VARIABLES

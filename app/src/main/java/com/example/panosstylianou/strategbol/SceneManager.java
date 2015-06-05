@@ -1,6 +1,10 @@
 package com.example.panosstylianou.strategbol;
 
+import android.content.res.Resources;
+
 import org.andengine.engine.Engine;
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.ui.IGameInterface;
 
 import com.example.panosstylianou.strategbol.BaseScene;
@@ -32,6 +36,10 @@ public class SceneManager
     private BaseScene currentScene;
 
     private Engine engine = ResourcesManager.getInstance().engine;
+
+    public void setGameScene(BaseScene gameScene) {
+        this.gameScene = gameScene;
+    }
 
     public enum SceneType
     {
@@ -110,10 +118,47 @@ public class SceneManager
     }
 
     public void createMenuScene()
-    {
+    {   //Initialize Menu Scene and load resources
         ResourcesManager.getInstance().loadMenuResources();
         menuScene = new MainMenuScene();
+        loadingScene = new LoadingScene();
+        splashScene = new SplashScene();
         setScene(menuScene);
         disposeSplashScene();
+    }
+
+    public void loadGameScene(final Engine mEngine){    //Load Game Resources while displaying Loading Scene
+
+
+        setScene(loadingScene);
+        ResourcesManager.getInstance().unloadMenuTextures();
+
+
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+
+            public void onTimePassed(TimerHandler pTimerHandler) {
+
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadGameResources();
+                gameScene = new GameScene();
+                setScene(gameScene);
+            }
+        }));
+
+    }
+
+    public void loadMenuScene(final Engine mEngine){
+        setScene(loadingScene);
+        gameScene.disposeScene();
+        ResourcesManager.getInstance().unloadGameTextures();
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
+        {
+            public void onTimePassed(final TimerHandler pTimerHandler)
+            {
+                mEngine.unregisterUpdateHandler(pTimerHandler);
+                ResourcesManager.getInstance().loadMenuTextures();
+                setScene(menuScene);
+            }
+        }));
     }
 }
