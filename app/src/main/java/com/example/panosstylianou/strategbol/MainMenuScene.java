@@ -83,8 +83,6 @@ public class MainMenuScene extends BaseScene{
         });
 
 
-        //menuChildScene.setOnMenuItemClickListener(this);
-
         setChildScene(menuChildScene);
     }
 

@@ -9,11 +9,7 @@ import org.andengine.ui.IGameInterface;
 
 import com.example.panosstylianou.strategbol.BaseScene;
 
-/**
- * @author Mateusz Mysliwiec
- * @author www.matim-dev.com
- * @version 1.0
- */
+
 public class SceneManager
 {
     //---------------------------------------------

@@ -49,6 +49,15 @@ public class ResourcesManager
     private BuildableBitmapTextureAtlas menuTextureAtlas;
     private BuildableBitmapTextureAtlas optionTextureAtlas;
 
+    //Game Texture
+    public BuildableBitmapTextureAtlas gameTextureAtlas;
+
+    //Game Texture Regions
+    public ITextureRegion player1_region;
+    public ITextureRegion player2_region;
+    public ITextureRegion player3_region;
+    public ITextureRegion football_region;
+
     //---------------------------------------------
     // TEXTURES & TEXTURE REGIONS
     //---------------------------------------------
@@ -128,6 +137,24 @@ public class ResourcesManager
 
     private void loadGameGraphics()
     {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
+        gameTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+
+        player1_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player.png");
+        player2_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player.png");
+        player3_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player.png");
+        football_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "football.png");
+
+        try
+        {
+            this.gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+            this.gameTextureAtlas.load();
+        }
+        catch (final TextureAtlasBuilderException e)
+        {
+            Debug.e(e);
+        }
+
 
     }
 
@@ -194,5 +221,8 @@ public class ResourcesManager
     public void unloadGameTextures(){
         //
     }
+
+
+
 }
 
