@@ -1,8 +1,5 @@
 package com.example.panosstylianou.strategbol;
 
-import android.view.KeyEvent;
-import android.view.View;
-
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
@@ -26,7 +23,6 @@ public class MainMenuScene extends BaseScene{
     @Override
     public void onBackKeyPressed() {
         System.exit(0);
-
     }
 
     @Override

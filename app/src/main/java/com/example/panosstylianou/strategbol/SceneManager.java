@@ -1,14 +1,9 @@
 package com.example.panosstylianou.strategbol;
 
-import android.content.res.Resources;
-
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.ui.IGameInterface;
-
-import com.example.panosstylianou.strategbol.BaseScene;
-
 
 public class SceneManager
 {

@@ -3,13 +3,11 @@ package com.example.panosstylianou.strategbol;
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.camera.Camera;
-import org.andengine.engine.options.EngineOptions;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -163,7 +161,7 @@ public class ResourcesManager
     {
         MusicFactory.setAssetBasePath("sound/");
         try {
-            mMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "LA.mp3");
+            mMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "shoeshine.mp3");
             mMusic.play();
             mMusic.setLooping(true);
 
