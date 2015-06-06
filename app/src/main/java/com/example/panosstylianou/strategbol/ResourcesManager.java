@@ -1,6 +1,9 @@
 package com.example.panosstylianou.strategbol;
 
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.camera.Camera;
+import org.andengine.engine.options.EngineOptions;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
@@ -17,6 +20,8 @@ import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
+
+import java.io.IOException;
 
 /**
  * @author Mateusz Mysliwiec
@@ -41,11 +46,11 @@ public class ResourcesManager
 
 
     public ITextureRegion menu_background_region;
-    public ITextureRegion option_background_region;
     public ITextureRegion play_region;
     public ITextureRegion options_region;
 
     public Font font;
+    public Music mMusic;
 
     private BuildableBitmapTextureAtlas menuTextureAtlas;
     private BuildableBitmapTextureAtlas optionTextureAtlas;
@@ -156,7 +161,15 @@ public class ResourcesManager
 
     private void loadMenuAudio()
     {
+        MusicFactory.setAssetBasePath("sound/");
+        try {
+            mMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "LA.mp3");
+            mMusic.play();
+            mMusic.setLooping(true);
 
+        } catch (IOException e) {
+            Debug.e(e.getMessage());
+        }
     }
 
     private void loadGameGraphics()

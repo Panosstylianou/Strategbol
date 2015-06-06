@@ -56,7 +56,7 @@ public class OptionScene extends BaseScene {
         {   //Create a new sprite in the middle of the screen for the background
             Sprite spriteBG = new Sprite(240, 400, resourcesManager.menu_background_region, vbom);
             attachChild(spriteBG);
-            spriteBG.setAlpha(0.2f);
+            spriteBG.setAlpha(0.4f);
         }
     }
 
@@ -79,31 +79,28 @@ public class OptionScene extends BaseScene {
         optionsHUD.attachChild(difficultyText); //Attach Options Text to HUD
 
         ResourcesManager.getInstance().camera.setHUD(optionsHUD);
-
         camera.setHUD(optionsHUD);
-
     }
 
     private MenuScene menuChildScene;
-    private final int BACKGROUND = 0;
-    private final int VOLUME_SLIDER = 1;
-    private final int DIFFICULTY_LEVEL = 2;
+    private final int VOLUME_SLIDER = 0;
+    private final int DIFFICULTY_LEVEL = 1;
 
     private void createMenuChildScene()
     {
         menuChildScene = new MenuScene(camera); //Built-in AndEngine MenuScene class
         menuChildScene.setPosition(240, 400);
+
         //Create menu buttons with ScaleMenuItemDecorator to make then animated - Could be changed
         final IMenuItem volumeSlider = new ScaleMenuItemDecorator(new SpriteMenuItem(VOLUME_SLIDER, resourcesManager.volume_region, vbom), 1.2f, 1);
         final IMenuItem difficultyLevel = new ScaleMenuItemDecorator(new SpriteMenuItem(DIFFICULTY_LEVEL, resourcesManager.difficulty_region, vbom), 1.2f, 1);
-        final IMenuItem backgroundOption = new ScaleMenuItemDecorator(new SpriteMenuItem(BACKGROUND, resourcesManager.menu_background_region, vbom), 1.2f, 1);
+
         //Adding to scene
         menuChildScene.addMenuItem(volumeSlider);
         menuChildScene.addMenuItem(difficultyLevel);
 
         menuChildScene.buildAnimations();
         menuChildScene.setBackgroundEnabled(false);
-        backgroundOption.setAlpha(0.2f);
 
         volumeSlider.setPosition(super.getOffsetCenterX(), volumeSlider.getY() - 275);
         difficultyLevel.setPosition(super.getOffsetCenterX(), difficultyLevel.getY() - 600);
