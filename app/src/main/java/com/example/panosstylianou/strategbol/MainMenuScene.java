@@ -70,9 +70,11 @@ public class MainMenuScene extends BaseScene{
 
         menuChildScene.buildAnimations();
         menuChildScene.setBackgroundEnabled(false);
+        playMenuItem.setAlpha(0.5f);
+        optionsMenuItem.setAlpha(0.5f);
 
-        playMenuItem.setPosition(super.getOffsetCenterX(), playMenuItem.getY()-270);
-        optionsMenuItem.setPosition(super.getOffsetCenterX(), optionsMenuItem.getY()-310);
+        playMenuItem.setPosition(super.getOffsetCenterX(), playMenuItem.getY()-300);
+        optionsMenuItem.setPosition(super.getOffsetCenterX(), optionsMenuItem.getY()-350);
 
         menuChildScene.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener() {
             @Override
