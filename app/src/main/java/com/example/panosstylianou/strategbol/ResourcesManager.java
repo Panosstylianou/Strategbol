@@ -59,6 +59,8 @@ public class ResourcesManager
     public ITextureRegion player3_region;
     public ITextureRegion football_region;
     public ITextureRegion pitch_region;
+    public ITextureRegion volume_region;
+    public ITextureRegion difficulty_region;
 
     public ITiledTextureRegion player_region;
 
@@ -93,7 +95,21 @@ public class ResourcesManager
 
     private void loadOptionGraphics()
     {
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/option/");
+        optionTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+        menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(optionTextureAtlas, activity, "mainBackground.png");
+        volume_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(optionTextureAtlas, activity, "playBtn.png");
+        difficulty_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(optionTextureAtlas, activity, "optionsBtn.png");
 
+        try
+        {
+            this.optionTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+            this.optionTextureAtlas.load();
+        }
+        catch (final TextureAtlasBuilderException e)
+        {
+            Debug.e(e);
+        }
     }
 
     private void loadOptionFonts()

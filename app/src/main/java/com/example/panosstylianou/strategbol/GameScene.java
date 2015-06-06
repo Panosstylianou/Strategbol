@@ -113,13 +113,6 @@ public class GameScene extends BaseScene{
 
     }
 
-    private int score = 0;
-
-    private void addToScore(int i){
-       score += i;
-        scoreText.setText("Score:" + score);
-    }
-
     private PhysicsWorld physicsWorld;
 
         private void createPhysics(){
