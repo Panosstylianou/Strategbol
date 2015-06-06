@@ -163,7 +163,7 @@ public class SceneManager
 
     public void loadOptionScene(final Engine mEngine) {    //Load Option Resources
 
-        setScene(loadingScene);
+        //setScene(loadingScene);
         ResourcesManager.getInstance().unloadMenuTextures();
 
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {

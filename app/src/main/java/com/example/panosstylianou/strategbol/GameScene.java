@@ -92,7 +92,8 @@ public class GameScene extends BaseScene{
                     pGLState.enableDither();
                 }
             });
-        }    }
+        }
+    }
 
     private HUD gameHUD;
     private Text scoreText;
