@@ -9,6 +9,7 @@ import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.adt.align.HorizontalAlign;
 
 /**
@@ -17,6 +18,7 @@ import org.andengine.util.adt.align.HorizontalAlign;
 
 public class OptionScene extends BaseScene {
 
+    final BaseActivity seekbar = new SeekbarActivity();
 
     @Override
     public void createScene() {
@@ -50,6 +52,7 @@ public class OptionScene extends BaseScene {
     private void createBackground(){
         {   //Create a new sprite in the middle of the screen for the background
             Sprite spriteBG = new Sprite(240, 400, resourcesManager.menu_background_region, vbom);
+            
             attachChild(spriteBG);
             spriteBG.setAlpha(0.4f);
         }
@@ -73,6 +76,8 @@ public class OptionScene extends BaseScene {
         difficultyText.setAnchorCenter(0, 0);
         optionsHUD.attachChild(difficultyText); //Attach Options Text to HUD
 
+
+
         ResourcesManager.getInstance().camera.setHUD(optionsHUD);
         camera.setHUD(optionsHUD);
     }
@@ -89,13 +94,6 @@ public class OptionScene extends BaseScene {
         //Create menu buttons with ScaleMenuItemDecorator to make then animated - Could be changed
         final IMenuItem volumeSlider = new ScaleMenuItemDecorator(new SpriteMenuItem(VOLUME_SLIDER, resourcesManager.volume_region, vbom), 1.2f, 1);
         final IMenuItem difficultyLevel = new ScaleMenuItemDecorator(new SpriteMenuItem(DIFFICULTY_LEVEL, resourcesManager.difficulty_region, vbom), 1.2f, 1);
-
-
-
-
-
-
-
 
         //Adding to scene
         menuChildScene.addMenuItem(volumeSlider);
