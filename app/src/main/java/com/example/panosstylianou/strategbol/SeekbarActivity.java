@@ -4,13 +4,17 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import org.andengine.engine.Engine;
+
 /**
  * Created by Damalas on 07/06/15.
  */
 
-public class SeekbarActivity extends BaseActivity {
+ public class SeekbarActivity extends BaseActivity {
 
     private SeekBar volumeControl = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

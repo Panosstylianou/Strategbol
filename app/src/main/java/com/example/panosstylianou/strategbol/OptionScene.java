@@ -1,12 +1,14 @@
 package com.example.panosstylianou.strategbol;
 
+import android.content.Intent;
+import android.widget.SeekBar;
+
 import com.example.panosstylianou.strategbol.SceneManager.SceneType;
 import org.andengine.engine.camera.hud.HUD;
-<<<<<<< Updated upstream
-=======
+
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.entity.scene.background.Background;
->>>>>>> Stashed changes
+
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
@@ -54,12 +56,9 @@ public class OptionScene extends BaseScene {
 
     }
 
-
-
     private void createBackground(){
         {   //Create a new sprite in the middle of the screen for the background
             Sprite spriteBG = new Sprite(240, 400, resourcesManager.menu_background_region, vbom);
-            
             attachChild(spriteBG);
             spriteBG.setAlpha(0.4f);
         }
@@ -83,11 +82,10 @@ public class OptionScene extends BaseScene {
         difficultyText.setAnchorCenter(0, 0);
         optionsHUD.attachChild(difficultyText); //Attach Options Text to HUD
 
-
-
         ResourcesManager.getInstance().camera.setHUD(optionsHUD);
         camera.setHUD(optionsHUD);
     }
+
 
     private MenuScene menuChildScene;
     private final int VOLUME_SLIDER = 0;
@@ -105,7 +103,6 @@ public class OptionScene extends BaseScene {
         //Adding to scene
         menuChildScene.addMenuItem(volumeSlider);
         menuChildScene.addMenuItem(difficultyLevel);
-
         menuChildScene.buildAnimations();
         menuChildScene.setBackgroundEnabled(false);
 

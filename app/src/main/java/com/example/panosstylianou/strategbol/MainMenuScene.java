@@ -1,5 +1,7 @@
 package com.example.panosstylianou.strategbol;
 
+import android.content.Intent;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.entity.scene.menu.MenuScene;
