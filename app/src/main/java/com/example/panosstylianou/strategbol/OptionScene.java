@@ -2,6 +2,11 @@ package com.example.panosstylianou.strategbol;
 
 import com.example.panosstylianou.strategbol.SceneManager.SceneType;
 import org.andengine.engine.camera.hud.HUD;
+<<<<<<< Updated upstream
+=======
+import org.andengine.engine.handler.timer.ITimerCallback;
+import org.andengine.entity.scene.background.Background;
+>>>>>>> Stashed changes
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
@@ -48,6 +53,8 @@ public class OptionScene extends BaseScene {
         // removing all game scene objects.
 
     }
+
+
 
     private void createBackground(){
         {   //Create a new sprite in the middle of the screen for the background

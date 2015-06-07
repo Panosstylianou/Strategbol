@@ -1,6 +1,7 @@
 package com.example.panosstylianou.strategbol;
 
 import org.andengine.engine.camera.Camera;
+import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
@@ -22,6 +23,7 @@ public class MainMenuScene extends BaseScene{
 
     @Override
     public void onBackKeyPressed() {
+
         System.exit(0);
     }
 
@@ -35,6 +37,7 @@ public class MainMenuScene extends BaseScene{
     public void disposeScene() {
 
     }
+
 
     private void createBackground()
     {   //Create a new sprite in the middle of the screen for the background

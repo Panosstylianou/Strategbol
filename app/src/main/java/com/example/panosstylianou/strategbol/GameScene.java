@@ -4,15 +4,26 @@ package com.example.panosstylianou.strategbol;
  * Created by panosstylianou on 04/06/15.
  */
 
+import android.content.Intent;
+import android.net.Uri;
+import android.view.View;
+import android.widget.Button;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.example.panosstylianou.strategbol.BaseScene;
 import com.example.panosstylianou.strategbol.SceneManager.SceneType;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
+import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.LoopEntityModifier;
 import org.andengine.entity.modifier.ScaleModifier;
@@ -36,11 +47,35 @@ import org.andengine.util.level.constants.LevelConstants;
 import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
 import org.andengine.util.level.simple.SimpleLevelLoader;
 import org.xml.sax.Attributes;
-
 import java.io.IOException;
 
 
-public class GameScene extends BaseScene{
+public class GameScene extends BaseScene {
+
+
+    private HUD gameHUD;
+    private Text scoreText;
+
+    private boolean firstTouch = false;
+
+    private Text gameOverText;
+
+    private int score = 0;
+
+    private static final String TAG_ENTITY = "entity";
+    private static final String TAG_ENTITY_ATTRIBUTE_X = "x";
+    private static final String TAG_ENTITY_ATTRIBUTE_Y = "y";
+    private static final String TAG_ENTITY_ATTRIBUTE_TYPE = "type";
+
+    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER1 = "player1";
+    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER2 = "player2";
+    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER3 = "player3";
+    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL = "football";
+
+    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
+
+    private Player player;
+
 
     @Override
     public void createScene() {
@@ -50,11 +85,27 @@ public class GameScene extends BaseScene{
         createPhysics();
         loadLevel(1);
         createGameOverText();
-        setOnSceneTouchListener((IOnSceneTouchListener) this); //TODO this must be just this
+
+        //setOnSceneTouchListener(this); //TODO this must be just this
+
 
     }
+/*
+    Button button;
 
 
+    public void btnClick() {
+        button = (Button) findViewById(R.id.btnPlay);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent browserIntent =
+                        new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.howtosolvenow.com"));
+                startActivity(browserIntent);
+            }
+        });
+    }
+*/
 
     @Override
     public void onBackKeyPressed() {
@@ -80,23 +131,30 @@ public class GameScene extends BaseScene{
         // removing all game scene objects.
 
     }
+/*
+    @Override
+    public void setOnSceneTouchListener(ITimerCallback iTimerCallback) {
 
-    private void createBackground(){
-        {   //Create a new sprite in the middle of the screen for the background
-            attachChild(new Sprite(240, 400, resourcesManager.pitch_region, vbom)
-            {
-                @Override
-                protected void preDraw(GLState pGLState, Camera pCamera)
-                {
-                    super.preDraw(pGLState, pCamera);
-                    pGLState.enableDither();
-                }
-            });
-        }
     }
 
-    private HUD gameHUD;
-    private Text scoreText;
+    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent)
+    {
+        if (pSceneTouchEvent.isActionDown())
+        {
+            if (!firstTouch){
+                player.setRunning();
+                firstTouch = true;
+            }
+            else
+            {
+                player.jump();
+            }
+
+        }
+        return false;
+    }
+
+*/
 
     private void createHUD(){       //Create Heads-Up Display for User Interface
 
@@ -116,44 +174,26 @@ public class GameScene extends BaseScene{
 
     private PhysicsWorld physicsWorld;
 
-        private void createPhysics(){
+    private void createPhysics(){
         physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0,-17), false);    //Create Physics World with  60 steps per second
         registerUpdateHandler(physicsWorld);
     }
 
-    private boolean firstTouch = false;
 
-    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent)
-    {
-        if (pSceneTouchEvent.isActionDown())
-        {
-            if (!firstTouch){
-                player.setRunning();
-                firstTouch = true;
-            }
-            else
+
+    private void createBackground(){
+        {   //Create a new sprite in the middle of the screen for the background
+            attachChild(new Sprite(240, 400, resourcesManager.pitch_region, vbom)
             {
-                player.jump();
-            }
-
+                @Override
+                protected void preDraw(GLState pGLState, Camera pCamera)
+                {
+                    super.preDraw(pGLState, pCamera);
+                    pGLState.enableDither();
+                }
+            });
         }
-        return false;
     }
-
-
-    private static final String TAG_ENTITY = "entity";
-    private static final String TAG_ENTITY_ATTRIBUTE_X = "x";
-    private static final String TAG_ENTITY_ATTRIBUTE_Y = "y";
-    private static final String TAG_ENTITY_ATTRIBUTE_TYPE = "type";
-
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER1 = "player1";
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER2 = "player2";
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER3 = "player3";
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL = "football";
-
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
-
-    private Player player;
 
 
     private void loadLevel(int levelID)
@@ -208,6 +248,7 @@ public class GameScene extends BaseScene{
                     body.setUserData("player3");
                     physicsWorld.registerPhysicsConnector(new PhysicsConnector(levelObject, body, true, false));
                 }
+                /*
                 else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL))
                 {
                     levelObject = new Sprite(y, x, resourcesManager.football_region, vbom)
@@ -229,11 +270,12 @@ public class GameScene extends BaseScene{
                              * we will later check if player collide with this (coin)
                              * and if it does, we will increase score and hide coin
                              * it will be completed in next articles (after creating player code)
-                            */
+
                         }
                     };
                     levelObject.registerEntityModifier(new LoopEntityModifier(new ScaleModifier(1, 1, 1.3f)));
                 }
+                */
                 else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER))
                 {
                     player = new Player(x, y, vbom, camera, physicsWorld)
@@ -261,17 +303,14 @@ public class GameScene extends BaseScene{
             }
         });
 
-        levelLoader.loadLevelFromAsset(activity.getAssets(), "level/" + levelID + ".xml");
+        //levelLoader.loadLevelFromAsset(activity.getAssets(), "level/" + levelID + ".xml");
     }
-
-    private int score = 0;
 
     private void addToScore(int i){
         score += i;
         scoreText.setText("Score:" + score);
     }
 
-    private Text gameOverText;
     private boolean gameOverDisplayed = false;
 
     private void createGameOverText()

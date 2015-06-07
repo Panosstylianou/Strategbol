@@ -136,6 +136,8 @@ public class SceneManager
                 ResourcesManager.getInstance().loadGameResources();
                 gameScene = new GameScene();
                 setScene(gameScene);
+                //gameScene.setOnSceneTouchListener(this);
+
             }
         }));
 

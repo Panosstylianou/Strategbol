@@ -3,6 +3,7 @@ package com.example.panosstylianou.strategbol;
 /**
  * Created by panosstylianou on 04/06/15.
  */
+import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.text.Text;
 import org.andengine.util.adt.color.Color;
@@ -37,4 +38,5 @@ public class LoadingScene extends BaseScene
     {
 
     }
+
 }

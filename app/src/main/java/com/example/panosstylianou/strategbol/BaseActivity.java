@@ -1,5 +1,6 @@
 package com.example.panosstylianou.strategbol;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
@@ -13,37 +14,25 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.scene.background.SpriteBackground;
-import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.util.FPSLogger;
-import org.andengine.opengl.font.Font;
-import org.andengine.opengl.texture.ITexture;
-import org.andengine.opengl.texture.Texture;
-import org.andengine.opengl.texture.TextureOptions;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
-import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
-import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
-import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
-import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder;
-import org.andengine.opengl.texture.bitmap.AssetBitmapTexture;
-import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.texture.region.TextureRegion;
-import org.andengine.opengl.texture.region.TextureRegionFactory;
+
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.adt.color.Color;
 
 import java.io.IOError;
 import java.io.IOException;
+import com.example.panosstylianou.strategbol.ResourcesManager;
+import com.example.panosstylianou.strategbol.SceneManager;
 
 /**
  * Created by panosstylianou on 02/06/15.
  */
 
 
-public class BaseActivity extends BaseGameActivity
+public class BaseActivity extends BaseGameActivity implements IOnSceneTouchListener
 {
 
     private ResourcesManager resourcesManager;
@@ -92,18 +81,20 @@ public class BaseActivity extends BaseGameActivity
                 // load menu resources, create menu scene
                 // set menu scene using scene manager
                 // disposeSplashScene();
-                // READ NEXT ARTICLE FOR THIS PART.
             }
         }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();
 
     }
-
+/*
     @Override
-    protected void onDestroy(){
+    protected void onDestroy()
+    {
         super.onDestroy();
+        //super.onDestroy();
         System.exit(0);
     }
+*/
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
@@ -113,4 +104,8 @@ public class BaseActivity extends BaseGameActivity
         return false;
     }
 
+    @Override
+    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
+        return true;
+    }
 }

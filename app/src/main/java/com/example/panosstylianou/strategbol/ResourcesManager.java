@@ -87,6 +87,7 @@ public class ResourcesManager
         loadGameGraphics();
         loadGameFonts();
         loadGameAudio();
+
     }
 
     public void loadOptionResources()

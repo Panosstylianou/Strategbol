@@ -4,6 +4,7 @@ package com.example.panosstylianou.strategbol;
  * Created by panosstylianou on 02/06/15.
  */
 import org.andengine.engine.camera.Camera;
+import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
 
@@ -59,4 +60,5 @@ public class SplashScene extends BaseScene
         this.dispose();
 
     }
+
 }
