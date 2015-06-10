@@ -1,15 +1,11 @@
-package com.example.panosstylianou.strategbol;
+package com.example.panosstylianou.strategbol.Scenes;
 
 /**
  * Created by panosstylianou on 04/06/15.
  */
-import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.text.Text;
 import org.andengine.util.adt.color.Color;
-
-import com.example.panosstylianou.strategbol.BaseScene;
-import com.example.panosstylianou.strategbol.SceneManager.SceneType;
 
 
 public class LoadingScene extends BaseScene
@@ -28,9 +24,9 @@ public class LoadingScene extends BaseScene
     }
 
     @Override
-    public SceneType getSceneType()
+    public SceneManager.SceneType getSceneType()
     {
-        return SceneType.SCENE_LOADING;
+        return SceneManager.SceneType.SCENE_LOADING;
     }
 
     @Override

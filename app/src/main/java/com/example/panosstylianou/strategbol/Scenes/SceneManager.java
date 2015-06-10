@@ -1,4 +1,6 @@
-package com.example.panosstylianou.strategbol;
+package com.example.panosstylianou.strategbol.Scenes;
+
+import com.example.panosstylianou.strategbol.ResourcesManager.ResourcesManager;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -7,29 +9,22 @@ import org.andengine.ui.IGameInterface;
 
 public class SceneManager
 {
-    //---------------------------------------------
-    // SCENES
-    //---------------------------------------------
-
+    //SCENES
     private BaseScene splashScene;
     private BaseScene menuScene;
     private BaseScene gameScene;
     private BaseScene loadingScene;
     private BaseScene optionScene;
 
-    //---------------------------------------------
-    // VARIABLES
-    //---------------------------------------------
-
+    //CLASS VARIABLES
     private static final SceneManager INSTANCE = new SceneManager();
-
     private SceneType currentSceneType = SceneType.SCENE_SPLASH;
-
     private BaseScene currentScene;
-
     private Engine engine = ResourcesManager.getInstance().engine;
 
-    public void setGameScene(BaseScene gameScene) {
+    //CLASS METHODS
+    public void setGameScene(BaseScene gameScene)
+    {
         this.gameScene = gameScene;
     }
 
@@ -128,45 +123,56 @@ public class SceneManager
         setScene(loadingScene);
         ResourcesManager.getInstance().unloadMenuTextures();
 
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-
-            public void onTimePassed(TimerHandler pTimerHandler) {
-
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
+        {
+            public void onTimePassed(TimerHandler pTimerHandler)
+            {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameResources();
                 gameScene = new GameScene();
                 setScene(gameScene);
                 //gameScene.setOnSceneTouchListener(this);
-
             }
         }));
 
     }
 
-    public void loadMenuScene(final Engine mEngine){
+    public void loadMenuScene(final Engine mEngine)
+    {
+        this.getCurrentSceneType();
+        switch (currentSceneType)
+        {
+            case SCENE_GAME:
+                ResourcesManager.getInstance().unloadGameTextures();
+                break;
+            case SCENE_OPTIONS:
+                ResourcesManager.getInstance().unloadOptionTextures();
+                break;
+            default:
+                break;
+        }
 
         setScene(loadingScene);
 
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-            public void onTimePassed(final TimerHandler pTimerHandler) {
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
+        {
+            public void onTimePassed(final TimerHandler pTimerHandler)
+            {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadMenuTextures();
                 setScene(menuScene);
             }
         }));
-
-
     }
 
-    public void loadOptionScene(final Engine mEngine) {    //Load Option Resources
-
-        //setScene(loadingScene);
+    public void loadOptionScene(final Engine mEngine) //Load Option Resources
+    {
         ResourcesManager.getInstance().unloadMenuTextures();
 
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
-
-            public void onTimePassed(TimerHandler pTimerHandler) {
-
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
+        {
+            public void onTimePassed(TimerHandler pTimerHandler)
+            {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadOptionResources();
                 optionScene = new OptionScene();

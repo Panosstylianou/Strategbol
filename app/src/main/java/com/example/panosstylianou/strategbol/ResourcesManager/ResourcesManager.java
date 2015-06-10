@@ -1,7 +1,10 @@
-package com.example.panosstylianou.strategbol;
+package com.example.panosstylianou.strategbol.ResourcesManager;
+
+import com.example.panosstylianou.strategbol.Activities.BaseActivity;
 
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
+import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
@@ -34,47 +37,34 @@ public class ResourcesManager
 
     private static final ResourcesManager INSTANCE = new ResourcesManager();
 
-    public ITextureRegion splash_region;
-    private BitmapTextureAtlas splashTextureAtlas;
-
-    public org.andengine.engine.Engine engine;
+    public Engine engine;
     public BaseActivity activity;
     public Camera camera;
     public VertexBufferObjectManager vbom;
-
-
-    public ITextureRegion menu_background_region;
-    public ITextureRegion play_region;
-    public ITextureRegion options_region;
-
     public Font font;
     public Music mMusic;
 
+    //TEXTURES
+    private BitmapTextureAtlas splashTextureAtlas;
     private BuildableBitmapTextureAtlas menuTextureAtlas;
     private BuildableBitmapTextureAtlas optionTextureAtlas;
-
-    //Game Texture
     public BuildableBitmapTextureAtlas gameTextureAtlas;
 
-    //Game Texture Regions
+    //TEXTURE REGIONS
+    public ITextureRegion splash_region;
+    public ITextureRegion menu_background_region;
+    public ITextureRegion options_region;
+    public ITextureRegion volume_region;
+    public ITextureRegion play_region;
+    public ITextureRegion pitch_region;
+    public ITextureRegion football_region;
     public ITextureRegion player1_region;
     public ITextureRegion player2_region;
     public ITextureRegion player3_region;
-    public ITextureRegion football_region;
-    public ITextureRegion pitch_region;
-    public ITextureRegion volume_region;
-    public ITextureRegion difficulty_region;
 
     public ITiledTextureRegion player_region;
 
-    //---------------------------------------------
-    // TEXTURES & TEXTURE REGIONS
-    //---------------------------------------------
-
-    //---------------------------------------------
-    // CLASS LOGIC
-    //---------------------------------------------
-
+    //CLASS METHODS
     public void loadMenuResources()
     {
         loadMenuGraphics();
@@ -103,7 +93,6 @@ public class ResourcesManager
         optionTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
         menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(optionTextureAtlas, activity, "mainBackground.png");
         volume_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(optionTextureAtlas, activity, "volumeCtr.png");
-        difficulty_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(optionTextureAtlas, activity, "difficultyCtr.png");
 
         try
         {
@@ -127,7 +116,15 @@ public class ResourcesManager
 
     private void loadOptionAudio()
     {
+        MusicFactory.setAssetBasePath("sound/");
+        try {
+            mMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "rockafellerSkank.mp3");
+            mMusic.play();
+            mMusic.setLooping(true);
 
+        } catch (IOException e) {
+            Debug.e(e.getMessage());
+        }
     }
 
     private void loadMenuGraphics()
@@ -181,8 +178,7 @@ public class ResourcesManager
         player2_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player1.png");
         player3_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player1.png");
         football_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "football.png");
-
-        //player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas, activity, "player.png", 3, 1);
+        player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas, activity, "player.png", 3, 1);
 
 
         try
@@ -250,19 +246,28 @@ public class ResourcesManager
         return INSTANCE;
     }
 
-    public void unloadMenuTextures(){
+    public void unloadMenuTextures()
+    {
         menuTextureAtlas.unload();
+        mMusic.release();
     }
 
-    public void loadMenuTextures(){
+    public void loadMenuTextures()
+    {
         menuTextureAtlas.load();
     }
 
-    public void unloadGameTextures(){
-        //
+    public void unloadOptionTextures()
+    {
+        optionTextureAtlas.unload();
+        mMusic.release();
     }
 
-
+    public void unloadGameTextures()
+    {
+        optionTextureAtlas.unload();
+        mMusic.release();
+    }
 
 }
 

@@ -1,21 +1,18 @@
-package com.example.panosstylianou.strategbol;
+package com.example.panosstylianou.strategbol.Scenes;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
-import org.andengine.engine.handler.timer.ITimerCallback;
-import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import android.app.Activity;
-import com.example.panosstylianou.strategbol.ResourcesManager;
-import com.example.panosstylianou.strategbol.SceneManager.SceneType;
+import com.example.panosstylianou.strategbol.ResourcesManager.ResourcesManager;
 
 /**
  * @author Mateusz Mysliwiec
  * @author www.matim-dev.com
  * @version 1.0
  */
+
 public abstract class BaseScene extends Scene   //Basic representation of each created scene
 {
     //---------------------------------------------
@@ -50,7 +47,7 @@ public abstract class BaseScene extends Scene   //Basic representation of each c
 
     public abstract void onBackKeyPressed();
 
-    public abstract SceneType getSceneType();
+    public abstract SceneManager.SceneType getSceneType();
 
     public abstract void disposeScene();
 

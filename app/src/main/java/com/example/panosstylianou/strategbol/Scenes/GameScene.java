@@ -1,35 +1,21 @@
-package com.example.panosstylianou.strategbol;
+package com.example.panosstylianou.strategbol.Scenes;
 
 /**
  * Created by panosstylianou on 04/06/15.
  */
 
-import android.content.Intent;
-import android.net.Uri;
-import android.view.View;
 import android.widget.Button;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.Manifold;
-import com.example.panosstylianou.strategbol.BaseScene;
-import com.example.panosstylianou.strategbol.SceneManager.SceneType;
+import com.example.panosstylianou.strategbol.Game.Player;
+import com.example.panosstylianou.strategbol.ResourcesManager.ResourcesManager;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
-import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.entity.IEntity;
-import org.andengine.entity.modifier.LoopEntityModifier;
-import org.andengine.entity.modifier.ScaleModifier;
-import org.andengine.entity.scene.IOnSceneTouchListener;
-import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
@@ -37,11 +23,9 @@ import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.util.GLState;
 import org.andengine.util.SAXUtils;
 import org.andengine.util.adt.align.HorizontalAlign;
-import org.andengine.util.adt.color.Color;
 import org.andengine.util.level.EntityLoader;
 import org.andengine.util.level.constants.LevelConstants;
 import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
@@ -55,11 +39,12 @@ public class GameScene extends BaseScene {
 
     private HUD gameHUD;
     private Text scoreText;
+    private Text gameOverText;
+    private Player player;
+    private PhysicsWorld physicsWorld;
+    Button button;
 
     private boolean firstTouch = false;
-
-    private Text gameOverText;
-
     private int score = 0;
 
     private static final String TAG_ENTITY = "entity";
@@ -71,10 +56,7 @@ public class GameScene extends BaseScene {
     private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER2 = "player2";
     private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER3 = "player3";
     private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL = "football";
-
     private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
-
-    private Player player;
 
 
     @Override
@@ -91,9 +73,6 @@ public class GameScene extends BaseScene {
 
     }
 /*
-    Button button;
-
-
     public void btnClick() {
         button = (Button) findViewById(R.id.btnPlay);
         button.setOnClickListener(new View.OnClickListener() {
@@ -108,19 +87,22 @@ public class GameScene extends BaseScene {
 */
 
     @Override
-    public void onBackKeyPressed() {
+    public void onBackKeyPressed()
+    {
         SceneManager.getInstance().loadMenuScene(engine);
         ResourcesManager.getInstance().unloadGameTextures();
         this.disposeScene();
     }
 
     @Override
-    public SceneType getSceneType() {
-        return SceneType.SCENE_GAME;
+    public SceneManager.SceneType getSceneType()
+    {
+        return SceneManager.SceneType.SCENE_GAME;
     }
 
     @Override
-    public void disposeScene() {
+    public void disposeScene()
+    {
 
         camera.setHUD(null);
         camera.setCenter(240, 400);
@@ -156,7 +138,8 @@ public class GameScene extends BaseScene {
 
 */
 
-    private void createHUD(){       //Create Heads-Up Display for User Interface
+    private void createHUD()
+    {       //Create Heads-Up Display for User Interface
 
         gameHUD = new HUD();
 
@@ -172,16 +155,14 @@ public class GameScene extends BaseScene {
 
     }
 
-    private PhysicsWorld physicsWorld;
-
-    private void createPhysics(){
+    private void createPhysics()
+    {
         physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0,-17), false);    //Create Physics World with  60 steps per second
         registerUpdateHandler(physicsWorld);
     }
 
-
-
-    private void createBackground(){
+    private void createBackground()
+    {
         {   //Create a new sprite in the middle of the screen for the background
             attachChild(new Sprite(240, 400, resourcesManager.pitch_region, vbom)
             {
@@ -306,7 +287,8 @@ public class GameScene extends BaseScene {
         //levelLoader.loadLevelFromAsset(activity.getAssets(), "level/" + levelID + ".xml");
     }
 
-    private void addToScore(int i){
+    private void addToScore(int i)
+    {
         score += i;
         scoreText.setText("Score:" + score);
     }
@@ -325,7 +307,4 @@ public class GameScene extends BaseScene {
         attachChild(gameOverText);
         gameOverDisplayed = true;
     }
-
-
-
 }

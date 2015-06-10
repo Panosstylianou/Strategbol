@@ -1,9 +1,6 @@
-package com.example.panosstylianou.strategbol;
-
-import android.content.Intent;
+package com.example.panosstylianou.strategbol.Scenes;
 
 import org.andengine.engine.camera.Camera;
-import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
@@ -16,33 +13,40 @@ import org.andengine.opengl.util.GLState;
  */
 public class MainMenuScene extends BaseScene{
 
+    //CLASS VARIABLES/OBJECTS
+    private MenuScene menuChildScene;
+    private final int MENU_PLAY = 0;
+    private final int MENU_OPTIONS = 1;
 
+    //CLASS METHODS
     @Override
-    public void createScene() {
+    public void createScene()
+    {
         createBackground();
         createMenuChildScene();
     }
 
     @Override
-    public void onBackKeyPressed() {
-
+    public void onBackKeyPressed()
+    {
         System.exit(0);
     }
 
     @Override
-    public SceneManager.SceneType getSceneType() {
-
+    public SceneManager.SceneType getSceneType()
+    {
         return SceneManager.SceneType.SCENE_MENU;
     }
 
     @Override
-    public void disposeScene() {
+    public void disposeScene()
+    {
 
     }
 
-
     private void createBackground()
-    {   //Create a new sprite in the middle of the screen for the background
+    {
+        //Create a new sprite in the middle of the screen for the background
         attachChild(new Sprite(240, 400, resourcesManager.menu_background_region, vbom)
         {
             @Override
@@ -53,10 +57,6 @@ public class MainMenuScene extends BaseScene{
             }
         });
     }
-
-    private MenuScene menuChildScene;
-    private final int MENU_PLAY = 0;
-    private final int MENU_OPTIONS = 1;
 
     private void createMenuChildScene()
     {

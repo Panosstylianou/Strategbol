@@ -1,11 +1,10 @@
-package com.example.panosstylianou.strategbol;
+package com.example.panosstylianou.strategbol.Game;
 
 /**
  * Created by panosstylianou on 02/06/15.
  */
 
 import org.andengine.engine.camera.Camera;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -15,7 +14,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.example.panosstylianou.strategbol.ResourcesManager;
+import com.example.panosstylianou.strategbol.ResourcesManager.ResourcesManager;
 
 public abstract class Player extends AnimatedSprite
 {

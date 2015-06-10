@@ -1,15 +1,13 @@
-package com.example.panosstylianou.strategbol;
+package com.example.panosstylianou.strategbol.Scenes;
 
 /**
  * Created by panosstylianou on 02/06/15.
  */
 import org.andengine.engine.camera.Camera;
-import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
 
-import com.example.panosstylianou.strategbol.BaseScene;
-import com.example.panosstylianou.strategbol.SceneManager.SceneType;
+import com.example.panosstylianou.strategbol.Scenes.SceneManager.SceneType;
 
 /**
  * @author Mateusz Mysliwiec
@@ -58,7 +56,6 @@ public class SplashScene extends BaseScene
         splash.dispose();
         this.detachSelf();
         this.dispose();
-
     }
 
 }
