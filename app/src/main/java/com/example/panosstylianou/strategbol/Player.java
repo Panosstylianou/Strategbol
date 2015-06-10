@@ -1,4 +1,4 @@
-package com.example.panosstylianou.strategbol.Game;
+package com.example.panosstylianou.strategbol;
 
 /**
  * Created by panosstylianou on 02/06/15.
@@ -14,7 +14,6 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.example.panosstylianou.strategbol.ResourcesManager.ResourcesManager;
 
 public abstract class Player extends AnimatedSprite
 {

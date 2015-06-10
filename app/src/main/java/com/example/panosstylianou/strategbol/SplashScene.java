@@ -1,4 +1,4 @@
-package com.example.panosstylianou.strategbol.Scenes;
+package com.example.panosstylianou.strategbol;
 
 /**
  * Created by panosstylianou on 02/06/15.
@@ -6,8 +6,6 @@ package com.example.panosstylianou.strategbol.Scenes;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
-
-import com.example.panosstylianou.strategbol.Scenes.SceneManager.SceneType;
 
 /**
  * @author Mateusz Mysliwiec
@@ -43,9 +41,9 @@ public class SplashScene extends BaseScene
     }
 
     @Override
-    public SceneType getSceneType()
+    public SceneManager.SceneType getSceneType()
     {
-        return SceneType.SCENE_SPLASH;
+        return SceneManager.SceneType.SCENE_SPLASH;
 
     }
 

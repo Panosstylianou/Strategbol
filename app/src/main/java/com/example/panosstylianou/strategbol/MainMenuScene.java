@@ -1,4 +1,4 @@
-package com.example.panosstylianou.strategbol.Scenes;
+package com.example.panosstylianou.strategbol;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.menu.MenuScene;
@@ -11,7 +11,8 @@ import org.andengine.opengl.util.GLState;
 /**
  * Created by panosstylianou on 02/06/15.
  */
-public class MainMenuScene extends BaseScene{
+public class MainMenuScene extends BaseScene
+{
 
     //CLASS VARIABLES/OBJECTS
     private MenuScene menuChildScene;
@@ -39,8 +40,7 @@ public class MainMenuScene extends BaseScene{
     }
 
     @Override
-    public void disposeScene()
-    {
+    public void disposeScene() {
 
     }
 
@@ -95,10 +95,12 @@ public class MainMenuScene extends BaseScene{
         {
             case MENU_PLAY:
                 //Load Game Scene
+                ResourcesManager.getInstance().unloadMenuTextures();
                 SceneManager.getInstance().loadGameScene(engine);
                 return true;
             case MENU_OPTIONS:
                 //Load Options Scene
+                ResourcesManager.getInstance().unloadMenuTextures();
                 SceneManager.getInstance().loadOptionScene(engine);
                 return true;
             default:

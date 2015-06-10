@@ -1,9 +1,6 @@
-package com.example.panosstylianou.strategbol.Activities;
+package com.example.panosstylianou.strategbol;
 
 import android.view.KeyEvent;
-
-import com.example.panosstylianou.strategbol.ResourcesManager.ResourcesManager;
-import com.example.panosstylianou.strategbol.Scenes.SceneManager;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.LimitedFPSEngine;

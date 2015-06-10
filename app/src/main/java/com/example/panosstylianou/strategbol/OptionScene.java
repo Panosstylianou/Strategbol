@@ -1,6 +1,4 @@
-package com.example.panosstylianou.strategbol.Scenes;
-
-import com.example.panosstylianou.strategbol.ResourcesManager.ResourcesManager;
+package com.example.panosstylianou.strategbol;
 
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.scene.menu.MenuScene;
@@ -39,6 +37,7 @@ public class OptionScene extends BaseScene
     public void onBackKeyPressed()
     {
         SceneManager.getInstance().loadMenuScene(engine);
+        ResourcesManager.getInstance().unloadOptionTextures();
         this.disposeScene();
     }
 

@@ -1,6 +1,4 @@
-package com.example.panosstylianou.strategbol.Scenes;
-
-import com.example.panosstylianou.strategbol.ResourcesManager.ResourcesManager;
+package com.example.panosstylianou.strategbol;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.handler.timer.ITimerCallback;
@@ -48,34 +46,6 @@ public class SceneManager
         currentSceneType = scene.getSceneType();
     }
 
-    public void setScene(SceneType sceneType)
-    {
-        switch (sceneType)
-        {
-            case SCENE_MENU:
-                setScene(menuScene);
-                break;
-            case SCENE_GAME:
-                setScene(gameScene);
-                break;
-            case SCENE_SPLASH:
-                setScene(splashScene);
-                break;
-            case SCENE_LOADING:
-                setScene(loadingScene);
-                break;
-            case SCENE_OPTIONS:
-                setScene(optionScene);
-                break;
-            default:
-                break;
-        }
-    }
-
-    //---------------------------------------------
-    // GETTERS AND SETTERS
-    //---------------------------------------------
-
     public void createSplashScene(IGameInterface.OnCreateSceneCallback pOnCreateSceneCallback)
     {
         ResourcesManager.getInstance().loadSplashScreen();
@@ -90,8 +60,6 @@ public class SceneManager
         splashScene.disposeScene();
         splashScene = null;
     }
-
-
 
     public static SceneManager getInstance()
     {
@@ -118,10 +86,9 @@ public class SceneManager
         disposeSplashScene();
     }
 
-    public void loadGameScene(final Engine mEngine){    //Load Game Resources while displaying Loading Scene
-
+    public void loadGameScene(final Engine mEngine) //Load Game Resources while displaying Loading Scene
+    {
         setScene(loadingScene);
-        ResourcesManager.getInstance().unloadMenuTextures();
 
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
         {
@@ -139,19 +106,6 @@ public class SceneManager
 
     public void loadMenuScene(final Engine mEngine)
     {
-        this.getCurrentSceneType();
-        switch (currentSceneType)
-        {
-            case SCENE_GAME:
-                ResourcesManager.getInstance().unloadGameTextures();
-                break;
-            case SCENE_OPTIONS:
-                ResourcesManager.getInstance().unloadOptionTextures();
-                break;
-            default:
-                break;
-        }
-
         setScene(loadingScene);
 
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
@@ -159,7 +113,8 @@ public class SceneManager
             public void onTimePassed(final TimerHandler pTimerHandler)
             {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadMenuTextures();
+                ResourcesManager.getInstance().loadMenuResources();
+                menuScene = new MainMenuScene();
                 setScene(menuScene);
             }
         }));
@@ -167,8 +122,6 @@ public class SceneManager
 
     public void loadOptionScene(final Engine mEngine) //Load Option Resources
     {
-        ResourcesManager.getInstance().unloadMenuTextures();
-
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
         {
             public void onTimePassed(TimerHandler pTimerHandler)

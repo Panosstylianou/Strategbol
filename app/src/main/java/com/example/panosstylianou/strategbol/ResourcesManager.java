@@ -1,6 +1,4 @@
-package com.example.panosstylianou.strategbol.ResourcesManager;
-
-import com.example.panosstylianou.strategbol.Activities.BaseActivity;
+package com.example.panosstylianou.strategbol;
 
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
@@ -178,8 +176,7 @@ public class ResourcesManager
         player2_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player1.png");
         player3_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player1.png");
         football_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "football.png");
-        player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas, activity, "player.png", 3, 1);
-
+        //player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas, activity, "player.png", 3, 1);
 
         try
         {
@@ -252,11 +249,6 @@ public class ResourcesManager
         mMusic.release();
     }
 
-    public void loadMenuTextures()
-    {
-        menuTextureAtlas.load();
-    }
-
     public void unloadOptionTextures()
     {
         optionTextureAtlas.unload();
@@ -265,8 +257,8 @@ public class ResourcesManager
 
     public void unloadGameTextures()
     {
-        optionTextureAtlas.unload();
-        mMusic.release();
+        gameTextureAtlas.unload();
+        //mMusic.release();
     }
 
 }

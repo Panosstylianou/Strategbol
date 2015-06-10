@@ -1,4 +1,4 @@
-package com.example.panosstylianou.strategbol.Activities;
+package com.example.panosstylianou.strategbol;
 
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.entity.scene.IOnSceneTouchListener;

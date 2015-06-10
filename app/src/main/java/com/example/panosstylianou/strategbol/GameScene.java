@@ -1,4 +1,4 @@
-package com.example.panosstylianou.strategbol.Scenes;
+package com.example.panosstylianou.strategbol;
 
 /**
  * Created by panosstylianou on 04/06/15.
@@ -10,8 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.example.panosstylianou.strategbol.Game.Player;
-import com.example.panosstylianou.strategbol.ResourcesManager.ResourcesManager;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;

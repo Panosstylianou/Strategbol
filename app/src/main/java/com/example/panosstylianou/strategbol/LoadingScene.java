@@ -1,4 +1,4 @@
-package com.example.panosstylianou.strategbol.Scenes;
+package com.example.panosstylianou.strategbol;
 
 /**
  * Created by panosstylianou on 04/06/15.
