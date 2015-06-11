@@ -115,7 +115,8 @@ public class ResourcesManager
     private void loadOptionAudio()
     {
         MusicFactory.setAssetBasePath("sound/");
-        try {
+        try
+        {
             mMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "rockafellerSkank.mp3");
             mMusic.play();
             mMusic.setLooping(true);
@@ -187,18 +188,28 @@ public class ResourcesManager
         {
             Debug.e(e);
         }
-
-
     }
 
     private void loadGameFonts()
     {
+        FontFactory.setAssetBasePath("Aller/");
+        final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
+        font = FontFactory.createStrokeFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), "Aller_Rg.ttf", 50, true, Color.WHITE, 2, Color.BLACK);
+        font.load();
     }
 
     private void loadGameAudio()
     {
+        MusicFactory.setAssetBasePath("sound/");
+        try {
+            mMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "rudeBoyRock.mp3");
+            mMusic.play();
+            mMusic.setLooping(true);
 
+        } catch (IOException e) {
+            Debug.e(e.getMessage());
+        }
     }
 
     public void loadSplashScreen()
@@ -207,25 +218,14 @@ public class ResourcesManager
         splashTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR);
         splash_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashTextureAtlas, activity, "splash.png", 0, 0);
         splashTextureAtlas.load();
-
     }
 
     public void unloadSplashScreen()
     {
         splashTextureAtlas.unload();
         splash_region = null;
-
     }
 
-    /**
-     * @param engine
-     * @param activity
-     * @param camera
-     * @param vbom
-     * <br><br>
-     * We use this method at beginning of game loading, to prepare Resources Manager properly,
-     * setting all needed parameters, so we can latter access them from different classes (eg. scenes)
-     */
     public static void prepareManager(org.andengine.engine.Engine engine, BaseActivity activity, Camera camera, VertexBufferObjectManager vbom)
     {
         getInstance().engine = engine;
@@ -233,10 +233,6 @@ public class ResourcesManager
         getInstance().camera = camera;
         getInstance().vbom = vbom;
     }
-
-    //---------------------------------------------
-    // GETTERS AND SETTERS
-    //---------------------------------------------
 
     public static ResourcesManager getInstance()
     {
@@ -246,19 +242,48 @@ public class ResourcesManager
     public void unloadMenuTextures()
     {
         menuTextureAtlas.unload();
+        menu_background_region = null;
+        play_region = null;
+        options_region = null;
+
+        //font.unload();
+        //font = null;
+
+        mMusic.stop();
         mMusic.release();
+        mMusic = null;
     }
 
     public void unloadOptionTextures()
     {
         optionTextureAtlas.unload();
+        menu_background_region = null;
+        volume_region = null;
+
+        //font.unload();
+        //font = null;
+
+        mMusic.stop();
         mMusic.release();
+        mMusic = null;
     }
 
     public void unloadGameTextures()
     {
         gameTextureAtlas.unload();
-        //mMusic.release();
+        football_region = null;
+        pitch_region = null;
+        player1_region = null;
+        player2_region = null;
+        player3_region = null;
+        //player_region = null;
+
+        //font.unload();
+        //font = null;
+
+        mMusic.stop();
+        mMusic.release();
+        mMusic = null;
     }
 
 }

@@ -52,6 +52,7 @@ public class OptionScene extends BaseScene
     {
         camera.setHUD(null);
         camera.setCenter(240, 400);
+        camera.setChaseEntity(null);
 
         // TODO code responsible for disposing scene
         // removing all game scene objects.

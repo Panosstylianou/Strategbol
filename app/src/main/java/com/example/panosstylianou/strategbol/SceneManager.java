@@ -101,7 +101,6 @@ public class SceneManager
                 //gameScene.setOnSceneTouchListener(this);
             }
         }));
-
     }
 
     public void loadMenuScene(final Engine mEngine)
@@ -132,7 +131,6 @@ public class SceneManager
                 setScene(optionScene);
             }
         }));
-
     }
 
 }
