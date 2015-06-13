@@ -68,7 +68,7 @@ public class ResourcesManager
     public ITextureRegion player3_region;
     public ITextureRegion musicOn_region;
     public ITextureRegion musicOff_region;
-
+    public ITextureRegion info_region;
 
     public ITiledTextureRegion player_region;
 
@@ -171,6 +171,8 @@ public class ResourcesManager
         tutorial_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "tutorialBtn.png");
         musicOn_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "musicOn.png");
         musicOff_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "musicOff.png");
+        info_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "info.png");
+
 
         try
         {
@@ -242,6 +244,7 @@ public class ResourcesManager
         tutorial_region = null;
         musicOn_region = null;
         musicOff_region = null;
+        info_region = null;
 
         //font.unload();
         //font = null;

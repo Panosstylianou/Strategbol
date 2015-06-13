@@ -23,6 +23,7 @@ public class MainMenuScene extends BaseScene
     private final int MENU_TUTORIAL = 1;
     private final int MENU_VOLUME_ON = 3;
     private final int MENU_VOLUME_OFF = 4;
+    private final int MENU_INFO = 5;
 
     private IMenuItem volumeOnMenuItem;
     private IMenuItem volumeOffMenuItem;
@@ -125,6 +126,8 @@ public class MainMenuScene extends BaseScene
         //Last two float numbers refer to the scale of the object when selected and when unselected.
         final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 1.2f, 1);
         final IMenuItem tutorialMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_TUTORIAL, resourcesManager.tutorial_region, vbom), 1.2f, 1);
+        final IMenuItem infoMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_INFO, resourcesManager.info_region, vbom), 1.2f, 1);
+
         volumeOnMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_VOLUME_ON, resourcesManager.musicOn_region, vbom), 1.2f, 1);
         volumeOffMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_VOLUME_OFF, resourcesManager.musicOff_region, vbom), 1.2f, 1);
 
@@ -133,6 +136,7 @@ public class MainMenuScene extends BaseScene
         menuChildScene.addMenuItem(tutorialMenuItem);
         menuChildScene.addMenuItem(volumeOnMenuItem);
         menuChildScene.addMenuItem(volumeOffMenuItem);
+        menuChildScene.addMenuItem(infoMenuItem);
 
         menuChildScene.buildAnimations();
         menuChildScene.setBackgroundEnabled(false);
@@ -144,6 +148,7 @@ public class MainMenuScene extends BaseScene
         tutorialMenuItem.setPosition(super.getOffsetCenterX(), tutorialMenuItem.getY() - 400);
         volumeOnMenuItem.setPosition(super.getOffsetCenterX() - 210, super.getOffsetCenterY() - 370);
         volumeOffMenuItem.setPosition(super.getOffsetCenterX() - 210, super.getOffsetCenterY() - 370);
+        infoMenuItem.setPosition(super.getOffsetCenterX() + 210, super.getOffsetCenterY() - 370);
 
         menuChildScene.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener() {
             @Override
@@ -174,6 +179,16 @@ public class MainMenuScene extends BaseScene
                 this.changeMusic();
                 resourcesManager.saveData();
                 return true;
+            case MENU_INFO:
+                //Load Info Scene
+                activity.runOnUiThread(new Runnable()
+                {
+                    public void run()
+                    {
+                        Toast.makeText(activity, "The ONLY thing you need to know for now, is that this game will be awesome!", Toast.LENGTH_LONG).show();
+                    }
+                });
+                //TODO INFO Popup Scene
             default:
                 return false;
         }
