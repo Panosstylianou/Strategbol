@@ -1,6 +1,7 @@
 package com.example.panosstylianou.strategbol;
 
 import org.andengine.engine.camera.hud.HUD;
+import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
 import org.andengine.entity.scene.menu.item.SpriteMenuItem;
@@ -8,21 +9,25 @@ import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.entity.text.TextOptions;
+import org.andengine.opengl.texture.ITexture;
+import org.andengine.opengl.texture.Texture;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.bitmap.BitmapTexture;
+import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.opengl.texture.region.TextureRegionFactory;
 import org.andengine.util.adt.align.HorizontalAlign;
 
 /**
  * Created by Damalas on 05/06/15.
  */
 
-public class OptionScene extends BaseScene
+public class TutorialScene extends BaseScene
 {
 
     //CLASS VARIABLES/OBJECTS
-    private HUD optionsHUD;
-    private Text volumeText;
+    private HUD tutorialHUD;
     private MenuScene menuChildScene;
-    private final int VOLUME_SLIDER = 0;
-
+    private Text someText;
 
     //CLASS METHODS
     @Override
@@ -31,20 +36,21 @@ public class OptionScene extends BaseScene
         createBackground();
         createHUD();
         createMenuChildScene();
+
     }
 
     @Override
     public void onBackKeyPressed()
     {
         SceneManager.getInstance().loadMenuScene(engine);
-        ResourcesManager.getInstance().unloadOptionTextures();
+        ResourcesManager.getInstance().unloadTutorialTextures();
         this.disposeScene();
     }
 
     @Override
     public SceneManager.SceneType getSceneType()
     {
-        return SceneManager.SceneType.SCENE_OPTIONS;
+        return SceneManager.SceneType.SCENE_TUTORIAL;
     }
 
     @Override
@@ -69,30 +75,24 @@ public class OptionScene extends BaseScene
 
     private void createHUD()
     {
-        optionsHUD = new HUD();
+        tutorialHUD = new HUD();
 
-        // CREATE VOLUME TEXT
-        volumeText = new Text(150, 640, resourcesManager.font, "Volume", new TextOptions(HorizontalAlign.CENTER), vbom); //Initialize text with all characters that are going to be used to prepare memory
-        volumeText.setAnchorCenter(0, 0);
+        // CREATE TEXT
+        someText = new Text(120, 650, resourcesManager.font, "TUTORIAL", new TextOptions(HorizontalAlign.CENTER), vbom); //Initialize text with all characters that are going to be used to prepare memory
+        someText.setAnchorCenter(0, 0);
+        tutorialHUD.attachChild(someText); //Attach Tutorial Text to HUD
 
-        optionsHUD.attachChild(volumeText); //Attach Options Text to HUD
-        ResourcesManager.getInstance().camera.setHUD(optionsHUD);
+        ResourcesManager.getInstance().camera.setHUD(tutorialHUD);
     }
 
     private void createMenuChildScene()
     {
         menuChildScene = new MenuScene(camera); //Built-in AndEngine MenuScene class
         menuChildScene.setPosition(240, 400);
-
-        //Create menu buttons with ScaleMenuItemDecorator to make then animated - Could be changed
-        final IMenuItem volumeSlider = new ScaleMenuItemDecorator(new SpriteMenuItem(VOLUME_SLIDER, resourcesManager.volume_region, vbom), 1.2f, 1);
-
-        //Adding to scene
-        menuChildScene.addMenuItem(volumeSlider);
-        menuChildScene.buildAnimations();
         menuChildScene.setBackgroundEnabled(false);
 
-        volumeSlider.setPosition(super.getOffsetCenterX(), volumeSlider.getY() - 275);
+
+
 
         menuChildScene.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener()
         {

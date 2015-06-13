@@ -5,6 +5,7 @@ package com.example.panosstylianou.strategbol;
  */
 
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -65,7 +66,6 @@ public class GameScene extends BaseScene {
         createPhysics();
         loadLevel(1);
         createGameOverText();
-
         //setOnSceneTouchListener(this); //TODO this must be just this
 
 

@@ -23,7 +23,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile project(':andEngine')
-   // compile project(':andEnginePhysicsBox2DExtension')
+    //compile project(':andEnginePhysicsBox2DExtension')
     compile files('libs/andenginephysicsbox2dextension.jar')
     compile files('libs/physicsbox2d_so_files.jar')
 }

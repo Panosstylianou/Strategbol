@@ -1,5 +1,6 @@
 package com.example.panosstylianou.strategbol;
 
+import android.media.AudioManager;
 import android.view.KeyEvent;
 
 import org.andengine.engine.Engine;
@@ -64,6 +65,7 @@ public class BaseActivity extends BaseGameActivity implements IOnSceneTouchListe
             {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 SceneManager.getInstance().createMenuScene();
+                setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
                 // load menu resources, create menu scene
                 // set menu scene using scene manager

@@ -12,7 +12,7 @@ public class SceneManager
     private BaseScene menuScene;
     private BaseScene gameScene;
     private BaseScene loadingScene;
-    private BaseScene optionScene;
+    private BaseScene tutorialScene;
 
     //CLASS VARIABLES
     private static final SceneManager INSTANCE = new SceneManager();
@@ -21,10 +21,6 @@ public class SceneManager
     private Engine engine = ResourcesManager.getInstance().engine;
 
     //CLASS METHODS
-    public void setGameScene(BaseScene gameScene)
-    {
-        this.gameScene = gameScene;
-    }
 
     public enum SceneType
     {
@@ -32,7 +28,7 @@ public class SceneManager
         SCENE_MENU,
         SCENE_GAME,
         SCENE_LOADING,
-        SCENE_OPTIONS,
+        SCENE_TUTORIAL,
     }
 
     //---------------------------------------------
@@ -80,14 +76,13 @@ public class SceneManager
     {   //Initialize Menu Scene and load resources
         ResourcesManager.getInstance().loadMenuResources();
         menuScene = new MainMenuScene();
-        loadingScene = new LoadingScene();
-        splashScene = new SplashScene();
         setScene(menuScene);
         disposeSplashScene();
     }
 
     public void loadGameScene(final Engine mEngine) //Load Game Resources while displaying Loading Scene
     {
+        loadingScene = new LoadingScene();
         setScene(loadingScene);
 
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
@@ -105,6 +100,7 @@ public class SceneManager
 
     public void loadMenuScene(final Engine mEngine)
     {
+        loadingScene = new LoadingScene();
         setScene(loadingScene);
 
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
@@ -119,16 +115,16 @@ public class SceneManager
         }));
     }
 
-    public void loadOptionScene(final Engine mEngine) //Load Option Resources
+    public void loadTutorialScene(final Engine mEngine) //Load Tutorial Resources
     {
         mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
         {
             public void onTimePassed(TimerHandler pTimerHandler)
             {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().loadOptionResources();
-                optionScene = new OptionScene();
-                setScene(optionScene);
+                ResourcesManager.getInstance().loadTutorialResources();
+                tutorialScene = new TutorialScene();
+                setScene(tutorialScene);
             }
         }));
     }

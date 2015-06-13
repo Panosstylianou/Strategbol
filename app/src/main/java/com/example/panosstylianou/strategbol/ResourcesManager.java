@@ -20,13 +20,18 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @author Mateusz Mysliwiec
  * @author www.matim-dev.com
  * @version 1.0
  */
+
 public class ResourcesManager
 {
     //---------------------------------------------
@@ -41,24 +46,27 @@ public class ResourcesManager
     public VertexBufferObjectManager vbom;
     public Font font;
     public Music mMusic;
+    public boolean musicOn = true;
 
     //TEXTURES
     private BitmapTextureAtlas splashTextureAtlas;
     private BuildableBitmapTextureAtlas menuTextureAtlas;
-    private BuildableBitmapTextureAtlas optionTextureAtlas;
-    public BuildableBitmapTextureAtlas gameTextureAtlas;
+    private BuildableBitmapTextureAtlas tutorialTextureAtlas;
+    private BuildableBitmapTextureAtlas gameTextureAtlas;
 
     //TEXTURE REGIONS
     public ITextureRegion splash_region;
     public ITextureRegion menu_background_region;
-    public ITextureRegion options_region;
-    public ITextureRegion volume_region;
+    public ITextureRegion tutorial_region;
     public ITextureRegion play_region;
     public ITextureRegion pitch_region;
     public ITextureRegion football_region;
     public ITextureRegion player1_region;
     public ITextureRegion player2_region;
     public ITextureRegion player3_region;
+    public ITextureRegion musicOn_region;
+    public ITextureRegion musicOff_region;
+
 
     public ITiledTextureRegion player_region;
 
@@ -66,36 +74,46 @@ public class ResourcesManager
     public void loadMenuResources()
     {
         loadMenuGraphics();
-        loadMenuAudio();
-        loadMenuFonts();
+
+        if (font == null)
+        {
+            loadFonts();
+        }
+        else
+        {
+            return;
+        }
+
+        if (mMusic == null)
+        {
+            loadAudio();
+        }
+        else
+        {
+            return;
+        }
     }
 
     public void loadGameResources()
     {
         loadGameGraphics();
-        loadGameFonts();
-        loadGameAudio();
-
     }
 
-    public void loadOptionResources()
+    public void loadTutorialResources()
     {
-        loadOptionGraphics();
-        loadOptionAudio();
-        loadOptionFonts();
+        loadTutorialGraphics();
     }
 
-    private void loadOptionGraphics()
+    private void loadTutorialGraphics()
     {
-        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/option/");
-        optionTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
-        menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(optionTextureAtlas, activity, "mainBackground.png");
-        volume_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(optionTextureAtlas, activity, "volumeCtr.png");
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/tutorial/");
+        tutorialTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+        menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tutorialTextureAtlas, activity, "mainBackground.png");
 
         try
         {
-            this.optionTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
-            this.optionTextureAtlas.load();
+            this.tutorialTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+            this.tutorialTextureAtlas.load();
         }
         catch (final TextureAtlasBuilderException e)
         {
@@ -103,7 +121,7 @@ public class ResourcesManager
         }
     }
 
-    private void loadOptionFonts()
+    private void loadFonts()
     {
         FontFactory.setAssetBasePath("Aller/");
         final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
@@ -112,7 +130,7 @@ public class ResourcesManager
         font.load();
     }
 
-    private void loadOptionAudio()
+    private void loadAudio()
     {
         MusicFactory.setAssetBasePath("sound/");
         try
@@ -132,7 +150,9 @@ public class ResourcesManager
         menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
         menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "mainBackground.png");
         play_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "playBtn.png");
-        options_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "optionsBtn.png");
+        tutorial_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "tutorialBtn.png");
+        musicOn_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "musicOn.png");
+        musicOff_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "musicOff.png");
 
         try
         {
@@ -144,27 +164,6 @@ public class ResourcesManager
             Debug.e(e);
         }
 
-    }
-
-    private void loadMenuFonts(){
-        FontFactory.setAssetBasePath("Aller/");
-        final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-
-        font = FontFactory.createStrokeFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), "Aller_Rg.ttf", 50, true, Color.WHITE, 2, Color.BLACK);
-        font.load();
-    }
-
-    private void loadMenuAudio()
-    {
-        MusicFactory.setAssetBasePath("sound/");
-        try {
-            mMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "shoeshine.mp3");
-            mMusic.play();
-            mMusic.setLooping(true);
-
-        } catch (IOException e) {
-            Debug.e(e.getMessage());
-        }
     }
 
     private void loadGameGraphics()
@@ -187,28 +186,6 @@ public class ResourcesManager
         catch (final TextureAtlasBuilderException e)
         {
             Debug.e(e);
-        }
-    }
-
-    private void loadGameFonts()
-    {
-        FontFactory.setAssetBasePath("Aller/");
-        final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-
-        font = FontFactory.createStrokeFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), "Aller_Rg.ttf", 50, true, Color.WHITE, 2, Color.BLACK);
-        font.load();
-    }
-
-    private void loadGameAudio()
-    {
-        MusicFactory.setAssetBasePath("sound/");
-        try {
-            mMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "rudeBoyRock.mp3");
-            mMusic.play();
-            mMusic.setLooping(true);
-
-        } catch (IOException e) {
-            Debug.e(e.getMessage());
         }
     }
 
@@ -244,28 +221,29 @@ public class ResourcesManager
         menuTextureAtlas.unload();
         menu_background_region = null;
         play_region = null;
-        options_region = null;
+        tutorial_region = null;
+        musicOn_region = null;
+        musicOff_region = null;
 
         //font.unload();
         //font = null;
 
-        mMusic.stop();
-        mMusic.release();
-        mMusic = null;
+        //mMusic.stop();
+        //mMusic.release();
+        //mMusic = null;
     }
 
-    public void unloadOptionTextures()
+    public void unloadTutorialTextures()
     {
-        optionTextureAtlas.unload();
+        tutorialTextureAtlas.unload();
         menu_background_region = null;
-        volume_region = null;
 
         //font.unload();
         //font = null;
 
-        mMusic.stop();
-        mMusic.release();
-        mMusic = null;
+        //mMusic.stop();
+        //mMusic.release();
+        //mMusic = null;
     }
 
     public void unloadGameTextures()
@@ -281,9 +259,9 @@ public class ResourcesManager
         //font.unload();
         //font = null;
 
-        mMusic.stop();
-        mMusic.release();
-        mMusic = null;
+        //mMusic.stop();
+        //mMusic.release();
+        //mMusic = null;
     }
 
 }
