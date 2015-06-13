@@ -1,5 +1,7 @@
 package com.example.panosstylianou.strategbol;
 
+import android.content.SharedPreferences;
+
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.Engine;
@@ -71,8 +73,24 @@ public class ResourcesManager
     public ITiledTextureRegion player_region;
 
     //CLASS METHODS
+    public void saveData()
+    {
+        SharedPreferences config = activity.getSharedPreferences("config", 0); //Create object of SharedPreferences.
+        SharedPreferences.Editor editor = config.edit(); //Get Editor
+        editor.putBoolean("music", musicOn); //Put value
+        editor.commit(); //Commit edits
+    }
+
+    public void loadData()
+    {
+        SharedPreferences config = activity.getSharedPreferences("config", 0);
+        musicOn = config.getBoolean("music", musicOn);
+    }
+
+
     public void loadMenuResources()
     {
+        loadData();
         loadMenuGraphics();
 
         if (font == null)

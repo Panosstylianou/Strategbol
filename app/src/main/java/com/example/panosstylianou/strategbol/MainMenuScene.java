@@ -156,6 +156,7 @@ public class MainMenuScene extends BaseScene
             case MENU_VOLUME_ON:
                 //Handle Music Volume
                 this.changeMusic();
+                resourcesManager.saveData();
                 return true;
             default:
                 return false;
