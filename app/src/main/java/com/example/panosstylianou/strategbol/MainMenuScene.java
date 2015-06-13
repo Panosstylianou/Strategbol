@@ -1,5 +1,7 @@
 package com.example.panosstylianou.strategbol;
 
+import android.widget.Toast;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.menu.MenuScene;
 import org.andengine.entity.scene.menu.item.IMenuItem;
@@ -58,6 +60,13 @@ public class MainMenuScene extends BaseScene
             volumeOffMenuItem.setVisible(true);
             resourcesManager.mMusic.setVolume(0f);
             resourcesManager.musicOn = false;
+            activity.runOnUiThread(new Runnable()
+            {
+                public void run()
+                {
+                    Toast.makeText(activity, "Music OFF!", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         else
         {
@@ -65,6 +74,13 @@ public class MainMenuScene extends BaseScene
             volumeOffMenuItem.setVisible(false);
             resourcesManager.mMusic.setVolume(1f);
             resourcesManager.musicOn = true;
+            activity.runOnUiThread(new Runnable()
+            {
+                public void run()
+                {
+                    Toast.makeText(activity, "Music ON!", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
