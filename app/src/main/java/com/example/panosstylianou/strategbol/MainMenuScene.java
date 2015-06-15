@@ -13,10 +13,9 @@ import org.andengine.opengl.util.GLState;
 /**
  * Created by panosstylianou on 02/06/15.
  */
-public class MainMenuScene extends BaseScene
-{
+public class MainMenuScene extends BaseScene {
 
-    //CLASS VARIABLES/OBJECTS
+    //VARIABLES
     private MenuScene menuChildScene;
 
     private final int MENU_PLAY = 0;
@@ -28,57 +27,43 @@ public class MainMenuScene extends BaseScene
     private IMenuItem volumeOnMenuItem;
     private IMenuItem volumeOffMenuItem;
 
-    //CLASS METHODS
     @Override
-    public void createScene()
-    {
+    public void createScene() {
         createBackground();
         createMenuChildScene();
         checkMusic();
     }
 
-    public void checkMusic()
-    {
-        if (resourcesManager.musicOn)
-        {
+    public void checkMusic() {
+        if (resourcesManager.musicOn) {
             volumeOnMenuItem.setVisible(true);
             volumeOffMenuItem.setVisible(false);
             resourcesManager.mMusic.setVolume(1f);
-        }
-        else
-        {
+        } else {
             volumeOnMenuItem.setVisible(false);
             volumeOffMenuItem.setVisible(true);
             resourcesManager.mMusic.setVolume(0f);
         }
     }
 
-    public void changeMusic()
-    {
-        if (resourcesManager.musicOn)
-        {
+    public void changeMusic() {
+        if (resourcesManager.musicOn) {
             volumeOnMenuItem.setVisible(false);
             volumeOffMenuItem.setVisible(true);
             resourcesManager.mMusic.setVolume(0f);
             resourcesManager.musicOn = false;
-            activity.runOnUiThread(new Runnable()
-            {
-                public void run()
-                {
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
                     Toast.makeText(activity, "Music OFF!", Toast.LENGTH_SHORT).show();
                 }
             });
-        }
-        else
-        {
+        } else {
             volumeOnMenuItem.setVisible(true);
             volumeOffMenuItem.setVisible(false);
             resourcesManager.mMusic.setVolume(1f);
             resourcesManager.musicOn = true;
-            activity.runOnUiThread(new Runnable()
-            {
-                public void run()
-                {
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
                     Toast.makeText(activity, "Music ON!", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -86,16 +71,14 @@ public class MainMenuScene extends BaseScene
     }
 
     @Override
-    public void onBackKeyPressed()
-    {
+    public void onBackKeyPressed() {
         ResourcesManager.getInstance().unloadMenuTextures();
         this.disposeScene();
         System.exit(0);
     }
 
     @Override
-    public SceneManager.SceneType getSceneType()
-    {
+    public SceneManager.SceneType getSceneType() {
         return SceneManager.SceneType.SCENE_MENU;
     }
 
@@ -106,8 +89,7 @@ public class MainMenuScene extends BaseScene
         camera.setChaseEntity(null);
     }
 
-    private void createBackground()
-    {
+    private void createBackground() {
         //Create a new sprite in the middle of the screen for the background
         attachChild(new Sprite(240, 400, resourcesManager.menu_background_region, vbom) {
             @Override
@@ -118,18 +100,20 @@ public class MainMenuScene extends BaseScene
         });
     }
 
-    private void createMenuChildScene()
-    {
+    private void createMenuChildScene() {
         menuChildScene = new MenuScene(camera); //Built-in AndEngine MenuScene class
         menuChildScene.setPosition(240, 400);
         //Create menu buttons with ScaleMenuItemDecorator to make then animated - Could be changed.
         //Last two float numbers refer to the scale of the object when selected and when unselected.
-        final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 1.2f, 1);
-        final IMenuItem tutorialMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_TUTORIAL, resourcesManager.tutorial_region, vbom), 1.2f, 1);
-        final IMenuItem infoMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_INFO, resourcesManager.info_region, vbom), 1.2f, 1);
+        final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_PLAY, resourcesManager.play_region, vbom), 0.9f, 1);
+        final IMenuItem tutorialMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_TUTORIAL, resourcesManager.tutorial_region, vbom), 0.7f, 1);
+        final IMenuItem infoMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_INFO, resourcesManager.info_region, vbom), 1.1f, 1);
 
-        volumeOnMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_VOLUME_ON, resourcesManager.musicOn_region, vbom), 1.2f, 1);
-        volumeOffMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_VOLUME_OFF, resourcesManager.musicOff_region, vbom), 1.2f, 1);
+        playMenuItem.setScale(0.8f);
+        tutorialMenuItem.setScale(0.6f);
+
+        volumeOnMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_VOLUME_ON, resourcesManager.musicOn_region, vbom), 1f, 1);
+        volumeOffMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(MENU_VOLUME_OFF, resourcesManager.musicOff_region, vbom), 1f, 1);
 
         //Adding to scene
         menuChildScene.addMenuItem(playMenuItem);
@@ -160,10 +144,8 @@ public class MainMenuScene extends BaseScene
         setChildScene(menuChildScene);
     }
 
-    public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY)
-    {
-        switch(pMenuItem.getID())
-        {
+    public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
+        switch (pMenuItem.getID()) {
             case MENU_PLAY:
                 //Load Game Scene
                 ResourcesManager.getInstance().unloadMenuTextures();
@@ -181,10 +163,8 @@ public class MainMenuScene extends BaseScene
                 return true;
             case MENU_INFO:
                 //Load Info Scene
-                activity.runOnUiThread(new Runnable()
-                {
-                    public void run()
-                    {
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
                         Toast.makeText(activity, "The ONLY thing you need to know for now, is that this game will be awesome!", Toast.LENGTH_LONG).show();
                     }
                 });

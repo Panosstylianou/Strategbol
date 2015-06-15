@@ -34,11 +34,9 @@ import java.io.PrintWriter;
  * @version 1.0
  */
 
-public class ResourcesManager
-{
-    //---------------------------------------------
-    // VARIABLES
-    //---------------------------------------------
+public class ResourcesManager {
+
+    //VARIABLES
 
     private static final ResourcesManager INSTANCE = new ResourcesManager();
 
@@ -48,7 +46,7 @@ public class ResourcesManager
     public VertexBufferObjectManager vbom;
     public Font font;
     public Music mMusic;
-    public boolean musicOn = true;
+    public boolean musicOn = false;
 
     //TEXTURES
     private BitmapTextureAtlas splashTextureAtlas;
@@ -72,75 +70,57 @@ public class ResourcesManager
 
     public ITiledTextureRegion player_region;
 
-    //CLASS METHODS
-    public void saveData()
-    {
+    public void saveData() {
         SharedPreferences config = activity.getSharedPreferences("config", 0); //Create object of SharedPreferences.
         SharedPreferences.Editor editor = config.edit(); //Get Editor
         editor.putBoolean("music", musicOn); //Put value
         editor.commit(); //Commit edits
     }
 
-    public void loadData()
-    {
+    public void loadData() {
         SharedPreferences config = activity.getSharedPreferences("config", 0);
         musicOn = config.getBoolean("music", musicOn);
     }
 
-
-    public void loadMenuResources()
-    {
+    public void loadMenuResources() {
         loadData();
         loadMenuGraphics();
 
-        if (font == null)
-        {
+        if (font == null) {
             loadFonts();
-        }
-        else
-        {
+        } else {
             return;
         }
 
-        if (mMusic == null)
-        {
+        if (mMusic == null) {
             loadAudio();
-        }
-        else
-        {
+        } else {
             return;
         }
     }
 
-    public void loadGameResources()
-    {
+    public void loadGameResources() {
         loadGameGraphics();
     }
 
-    public void loadTutorialResources()
-    {
+    public void loadTutorialResources() {
         loadTutorialGraphics();
     }
 
-    private void loadTutorialGraphics()
-    {
+    private void loadTutorialGraphics() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/tutorial/");
         tutorialTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
         menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(tutorialTextureAtlas, activity, "mainBackground.png");
 
-        try
-        {
+        try {
             this.tutorialTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
             this.tutorialTextureAtlas.load();
-        }
-        catch (final TextureAtlasBuilderException e)
-        {
+        } catch (final TextureAtlasBuilderException e) {
             Debug.e(e);
         }
     }
 
-    private void loadFonts()
-    {
+    private void loadFonts() {
         FontFactory.setAssetBasePath("Aller/");
         final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
@@ -148,11 +128,9 @@ public class ResourcesManager
         font.load();
     }
 
-    private void loadAudio()
-    {
+    private void loadAudio() {
         MusicFactory.setAssetBasePath("sound/");
-        try
-        {
+        try {
             mMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), activity, "rockafellerSkank.mp3");
             mMusic.play();
             mMusic.setLooping(true);
@@ -162,8 +140,7 @@ public class ResourcesManager
         }
     }
 
-    private void loadMenuGraphics()
-    {
+    private void loadMenuGraphics() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/menu/");
         menuTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
         menu_background_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "mainBackground.png");
@@ -174,20 +151,16 @@ public class ResourcesManager
         info_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTextureAtlas, activity, "info.png");
 
 
-        try
-        {
+        try {
             this.menuTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
             this.menuTextureAtlas.load();
-        }
-        catch (final TextureAtlasBuilderException e)
-        {
+        } catch (final TextureAtlasBuilderException e) {
             Debug.e(e);
         }
 
     }
 
-    private void loadGameGraphics()
-    {
+    private void loadGameGraphics() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/game/");
         gameTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
 
@@ -198,46 +171,38 @@ public class ResourcesManager
         football_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "football.png");
         //player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas, activity, "player.png", 3, 1);
 
-        try
-        {
+        try {
             this.gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
             this.gameTextureAtlas.load();
-        }
-        catch (final TextureAtlasBuilderException e)
-        {
+        } catch (final TextureAtlasBuilderException e) {
             Debug.e(e);
         }
     }
 
-    public void loadSplashScreen()
-    {
+    public void loadSplashScreen() {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         splashTextureAtlas = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR);
         splash_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(splashTextureAtlas, activity, "splash.png", 0, 0);
         splashTextureAtlas.load();
     }
 
-    public void unloadSplashScreen()
-    {
+    public void unloadSplashScreen() {
         splashTextureAtlas.unload();
         splash_region = null;
     }
 
-    public static void prepareManager(org.andengine.engine.Engine engine, BaseActivity activity, Camera camera, VertexBufferObjectManager vbom)
-    {
+    public static void prepareManager(org.andengine.engine.Engine engine, BaseActivity activity, Camera camera, VertexBufferObjectManager vbom) {
         getInstance().engine = engine;
         getInstance().activity = activity;
         getInstance().camera = camera;
         getInstance().vbom = vbom;
     }
 
-    public static ResourcesManager getInstance()
-    {
+    public static ResourcesManager getInstance() {
         return INSTANCE;
     }
 
-    public void unloadMenuTextures()
-    {
+    public void unloadMenuTextures() {
         menuTextureAtlas.unload();
         menu_background_region = null;
         play_region = null;
@@ -254,8 +219,7 @@ public class ResourcesManager
         //mMusic = null;
     }
 
-    public void unloadTutorialTextures()
-    {
+    public void unloadTutorialTextures() {
         tutorialTextureAtlas.unload();
         menu_background_region = null;
 
@@ -267,8 +231,7 @@ public class ResourcesManager
         //mMusic = null;
     }
 
-    public void unloadGameTextures()
-    {
+    public void unloadGameTextures() {
         gameTextureAtlas.unload();
         football_region = null;
         pitch_region = null;

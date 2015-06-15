@@ -5,8 +5,8 @@ import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 import org.andengine.ui.IGameInterface;
 
-public class SceneManager
-{
+public class SceneManager {
+
     //SCENES
     private BaseScene splashScene;
     private BaseScene menuScene;
@@ -14,16 +14,13 @@ public class SceneManager
     private BaseScene loadingScene;
     private BaseScene tutorialScene;
 
-    //CLASS VARIABLES
+    //VARIABLES
     private static final SceneManager INSTANCE = new SceneManager();
     private SceneType currentSceneType = SceneType.SCENE_SPLASH;
     private BaseScene currentScene;
     private Engine engine = ResourcesManager.getInstance().engine;
 
-    //CLASS METHODS
-
-    public enum SceneType
-    {
+    public enum SceneType {
         SCENE_SPLASH,
         SCENE_MENU,
         SCENE_GAME,
@@ -31,49 +28,38 @@ public class SceneManager
         SCENE_TUTORIAL,
     }
 
-    //---------------------------------------------
-    // CLASS LOGIC
-    //---------------------------------------------
-
-    public void setScene(BaseScene scene)
-    {
+    public void setScene(BaseScene scene) {
         engine.setScene(scene);
         currentScene = scene;
         currentSceneType = scene.getSceneType();
     }
 
-    public void createSplashScene(IGameInterface.OnCreateSceneCallback pOnCreateSceneCallback)
-    {
+    public void createSplashScene(IGameInterface.OnCreateSceneCallback pOnCreateSceneCallback) {
         ResourcesManager.getInstance().loadSplashScreen();
         splashScene = new SplashScene();
         currentScene = splashScene;
         pOnCreateSceneCallback.onCreateSceneFinished(splashScene);
     }
 
-    private void disposeSplashScene()
-    {
+    private void disposeSplashScene() {
         ResourcesManager.getInstance().unloadSplashScreen();
         splashScene.disposeScene();
         splashScene = null;
     }
 
-    public static SceneManager getInstance()
-    {
+    public static SceneManager getInstance() {
         return INSTANCE;
     }
 
-    public SceneType getCurrentSceneType()
-    {
+    public SceneType getCurrentSceneType() {
         return currentSceneType;
     }
 
-    public BaseScene getCurrentScene()
-    {
+    public BaseScene getCurrentScene() {
         return currentScene;
     }
 
-    public void createMenuScene()
-    {   //Initialize Menu Scene and load resources
+    public void createMenuScene() {   //Initialize Menu Scene and load resources
         ResourcesManager.getInstance().loadMenuResources();
         menuScene = new MainMenuScene();
         setScene(menuScene);
@@ -85,10 +71,8 @@ public class SceneManager
         loadingScene = new LoadingScene();
         setScene(loadingScene);
 
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
-        {
-            public void onTimePassed(TimerHandler pTimerHandler)
-            {
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadGameResources();
                 gameScene = new GameScene();
@@ -98,15 +82,12 @@ public class SceneManager
         }));
     }
 
-    public void loadMenuScene(final Engine mEngine)
-    {
+    public void loadMenuScene(final Engine mEngine) {
         loadingScene = new LoadingScene();
         setScene(loadingScene);
 
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
-        {
-            public void onTimePassed(final TimerHandler pTimerHandler)
-            {
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadMenuResources();
                 menuScene = new MainMenuScene();
@@ -117,10 +98,8 @@ public class SceneManager
 
     public void loadTutorialScene(final Engine mEngine) //Load Tutorial Resources
     {
-        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback()
-        {
-            public void onTimePassed(TimerHandler pTimerHandler)
-            {
+        mEngine.registerUpdateHandler(new TimerHandler(0.1f, new ITimerCallback() {
+            public void onTimePassed(TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().loadTutorialResources();
                 tutorialScene = new TutorialScene();

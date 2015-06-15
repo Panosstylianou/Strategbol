@@ -3,6 +3,7 @@ package com.example.panosstylianou.strategbol;
 /**
  * Created by panosstylianou on 02/06/15.
  */
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
@@ -12,18 +13,14 @@ import org.andengine.opengl.util.GLState;
  * @author www.matim-dev.com
  * @version 1.0
  */
-public class SplashScene extends BaseScene
-{
+public class SplashScene extends BaseScene {
     private Sprite splash;
 
     @Override
-    public void createScene()
-    {
-        splash = new Sprite(0, 0, resourcesManager.splash_region, vbom)
-        {   //Initializing the sprite - Attached in the middle of the screen
+    public void createScene() {
+        splash = new Sprite(0, 0, resourcesManager.splash_region, vbom) {   //Initializing the sprite - Attached in the middle of the screen
             @Override
-            protected void preDraw(GLState pGLState, Camera pCamera)
-            {
+            protected void preDraw(GLState pGLState, Camera pCamera) {
                 super.preDraw(pGLState, pCamera);
                 pGLState.enableDither();    //Dither Enabled - Improves quality - Gradient based art
             }
@@ -35,21 +32,18 @@ public class SplashScene extends BaseScene
     }
 
     @Override
-    public void onBackKeyPressed()
-    {
+    public void onBackKeyPressed() {
 
     }
 
     @Override
-    public SceneManager.SceneType getSceneType()
-    {
+    public SceneManager.SceneType getSceneType() {
         return SceneManager.SceneType.SCENE_SPLASH;
 
     }
 
     @Override
-    public void disposeScene()
-    {
+    public void disposeScene() {
         splash.detachSelf();
         splash.dispose();
         this.detachSelf();

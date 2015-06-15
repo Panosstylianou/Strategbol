@@ -23,21 +23,18 @@ import java.io.IOException;
  * Created by panosstylianou on 02/06/15.
  */
 
-public class BaseActivity extends BaseGameActivity implements IOnSceneTouchListener
-{
-    //CLASS VARIABLES/OBJECTS
+public class BaseActivity extends BaseGameActivity implements IOnSceneTouchListener {
+
+    //VARIABLES
     private ResourcesManager resourcesManager;
     private Camera camera;
 
-    //CLASS METHODS
     @Override
-    public Engine onCreateEngine(EngineOptions pEngineOptions)
-    {
+    public Engine onCreateEngine(EngineOptions pEngineOptions) {
         return new LimitedFPSEngine(pEngineOptions, 60);    //Create an Engine with a 60 second updates.
     }
 
-    public EngineOptions onCreateEngineOptions()
-    {
+    public EngineOptions onCreateEngineOptions() {
         camera = new Camera(0, 0, 480, 800);   //Set camera size 480x800
         EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.PORTRAIT_FIXED, new FillResolutionPolicy(), this.camera); //Set orientation Portrait
         engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);    //Set audio
@@ -52,17 +49,13 @@ public class BaseActivity extends BaseGameActivity implements IOnSceneTouchListe
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 
-    public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws IOException
-    {
+    public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws IOException {
         SceneManager.getInstance().createSplashScene(pOnCreateSceneCallback);
     }
 
-    public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException
-    {
-        mEngine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback()
-        {
-            public void onTimePassed(final TimerHandler pTimerHandler)
-            {
+    public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
+        mEngine.registerUpdateHandler(new TimerHandler(2f, new ITimerCallback() {
+            public void onTimePassed(final TimerHandler pTimerHandler) {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 SceneManager.getInstance().createMenuScene();
                 setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -73,21 +66,18 @@ public class BaseActivity extends BaseGameActivity implements IOnSceneTouchListe
             }
         }));
         pOnPopulateSceneCallback.onPopulateSceneFinished();
-
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             SceneManager.getInstance().getCurrentScene().onBackKeyPressed();
         }
         return false;
     }
 
     @Override
-    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent)
-    {
+    public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
         return true;
     }
 }

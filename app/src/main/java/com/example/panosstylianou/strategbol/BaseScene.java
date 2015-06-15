@@ -1,4 +1,5 @@
 package com.example.panosstylianou.strategbol;
+
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.Scene;
@@ -14,22 +15,15 @@ import android.app.Activity;
 
 public abstract class BaseScene extends Scene   //Basic representation of each created scene
 {
-    //---------------------------------------------
-    // VARIABLES
-    //---------------------------------------------
-
+    //VARIABLES
     protected Engine engine;
     protected Activity activity;
     protected ResourcesManager resourcesManager;
     protected VertexBufferObjectManager vbom;
     protected Camera camera;
 
-    //---------------------------------------------
-    // CONSTRUCTOR
-    //---------------------------------------------
-
-    public BaseScene()
-    {
+    //CONSTRUCTOR
+    public BaseScene() {
         this.resourcesManager = ResourcesManager.getInstance();
         this.engine = resourcesManager.engine;
         this.activity = resourcesManager.activity;
@@ -38,10 +32,7 @@ public abstract class BaseScene extends Scene   //Basic representation of each c
         createScene();
     }
 
-    //---------------------------------------------
-    // ABSTRACTION
-    //---------------------------------------------
-
+    //ABSTRACTION
     public abstract void createScene();
 
     public abstract void onBackKeyPressed();

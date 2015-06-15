@@ -21,18 +21,15 @@ import org.andengine.util.adt.align.HorizontalAlign;
  * Created by Damalas on 05/06/15.
  */
 
-public class TutorialScene extends BaseScene
-{
+public class TutorialScene extends BaseScene {
 
-    //CLASS VARIABLES/OBJECTS
+    //VARIABLES
     private HUD tutorialHUD;
     private MenuScene menuChildScene;
     private Text someText;
 
-    //CLASS METHODS
     @Override
-    public void createScene()
-    {
+    public void createScene() {
         createBackground();
         createHUD();
         createMenuChildScene();
@@ -40,32 +37,25 @@ public class TutorialScene extends BaseScene
     }
 
     @Override
-    public void onBackKeyPressed()
-    {
+    public void onBackKeyPressed() {
         SceneManager.getInstance().loadMenuScene(engine);
         ResourcesManager.getInstance().unloadTutorialTextures();
         this.disposeScene();
     }
 
     @Override
-    public SceneManager.SceneType getSceneType()
-    {
+    public SceneManager.SceneType getSceneType() {
         return SceneManager.SceneType.SCENE_TUTORIAL;
     }
 
     @Override
-    public void disposeScene()
-    {
+    public void disposeScene() {
         camera.setHUD(null);
         camera.setCenter(240, 400);
         camera.setChaseEntity(null);
-
-        // TODO code responsible for disposing scene
-        // removing all game scene objects.
     }
 
-    private void createBackground()
-    {
+    private void createBackground() {
         //Create a new sprite in the middle of the screen for the background
         Sprite spriteBG = new Sprite(240, 400, resourcesManager.menu_background_region, vbom);
         attachChild(spriteBG);
@@ -73,32 +63,26 @@ public class TutorialScene extends BaseScene
 
     }
 
-    private void createHUD()
-    {
+    private void createHUD() {
         tutorialHUD = new HUD();
-
-        // CREATE TEXT
-        someText = new Text(120, 650, resourcesManager.font, "TUTORIAL", new TextOptions(HorizontalAlign.CENTER), vbom); //Initialize text with all characters that are going to be used to prepare memory
-        someText.setAnchorCenter(0, 0);
+        //CREATE TEXT
+        someText = new Text(240, 750, resourcesManager.font, "Tutorial Scene: 0123456789", new TextOptions(HorizontalAlign.CENTER), vbom); //Initialize text with all characters that are going to be used to prepare memory
+        someText.setAnchorCenter(someText.getOffsetCenterX(), someText.getOffsetCenterY());
+        someText.setScale(0.7f);
+        someText.setText("Welcome to Strategbol!");
         tutorialHUD.attachChild(someText); //Attach Tutorial Text to HUD
 
         ResourcesManager.getInstance().camera.setHUD(tutorialHUD);
     }
 
-    private void createMenuChildScene()
-    {
+    private void createMenuChildScene() {
         menuChildScene = new MenuScene(camera); //Built-in AndEngine MenuScene class
         menuChildScene.setPosition(240, 400);
         menuChildScene.setBackgroundEnabled(false);
 
-
-
-
-        menuChildScene.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener()
-        {
+        menuChildScene.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY)
-            {
+            public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
                 //MainMenuScene.this.onMenuItemClicked(pMenuScene, pMenuItem, pMenuItemLocalX, pMenuItemLocalY);
                 return true;
             }
