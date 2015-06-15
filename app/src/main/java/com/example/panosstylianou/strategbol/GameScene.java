@@ -128,7 +128,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         // CREATE SCORE TEXT
         scoreText = new Text(20, 740, resourcesManager.font, "Game Scene: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom); //Initialize text with all characters that are going to be used to prepare memory
         scoreText.setAnchorCenter(0, 0);
-        scoreText.setText("Game Scene!");
+        scoreText.setText("");
         gameHUD.attachChild(scoreText); //Attach Score Text to HUD
 
         ResourcesManager.getInstance().camera.setHUD(gameHUD);
