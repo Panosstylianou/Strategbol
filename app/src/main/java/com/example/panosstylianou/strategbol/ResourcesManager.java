@@ -124,7 +124,7 @@ public class ResourcesManager {
         FontFactory.setAssetBasePath("Aller/");
         final ITexture mainFontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 
-        font = FontFactory.createStrokeFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), "Aller_Rg.ttf", 50, true, Color.WHITE, 2, Color.BLACK);
+        font = FontFactory.createStrokeFromAsset(activity.getFontManager(), mainFontTexture, activity.getAssets(), "AllerDisplay.ttf", 50, true, Color.WHITE, 2, Color.BLACK);
         font.load();
     }
 

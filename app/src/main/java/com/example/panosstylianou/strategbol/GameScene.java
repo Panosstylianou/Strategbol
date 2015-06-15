@@ -48,7 +48,6 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     private Text gameOverText;
     private Player player;
     private PhysicsWorld physicsWorld;
-    private Button button;
 
     private boolean firstTouch = false;
     private int score = 0;
@@ -73,19 +72,6 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         createGameOverText();
         setOnSceneTouchListener(this);
     }
-/*
-    public void btnClick() {
-        button = (Button) findViewById(R.id.btnPlay);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent browserIntent =
-                        new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.howtosolvenow.com"));
-                startActivity(browserIntent);
-            }
-        });
-    }
-*/
 
     @Override
     public void onBackKeyPressed() {
@@ -106,24 +92,19 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         camera.setChaseEntity(null);
     }
 
-    public void setOnSceneTouchListener(ITimerCallback iTimerCallback) {
-        return;
-    }
-
     public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
         if (pSceneTouchEvent.isActionDown()) {
             if (!firstTouch){
-                player.setRunning();
-                firstTouch = true;
+
             }
             else {
-                player.jump();
+
             }
         }
         return false;
     }
 
-    private void createHUD() {       //Create Heads-Up Display for User Interface
+    private void createHUD() { //Create Heads-Up Display for User Interface
         gameHUD = new HUD();
         // CREATE SCORE TEXT
         scoreText = new Text(20, 740, resourcesManager.font, "Game Scene: 0123456789", new TextOptions(HorizontalAlign.LEFT), vbom); //Initialize text with all characters that are going to be used to prepare memory
@@ -136,7 +117,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     }
 
     private void createPhysics() {
-        physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -17), false);    //Create Physics World with  60 steps per second
+        physicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, -17), false); //Create Physics World with  60 steps per second
         registerUpdateHandler(physicsWorld);
     }
 
@@ -191,52 +172,45 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                 final int x = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_X);
                 final int y = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_Y);
                 final String type = SAXUtils.getAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_TYPE);
-
                 final Sprite levelObject;
 
                 //Parse XML files
                 if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER1)) {
-                    levelObject = new Sprite(y, x, resourcesManager.player1_region, vbom);
+
+                    levelObject = new Sprite(x, y, resourcesManager.player1_region, vbom);
                     PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyDef.BodyType.StaticBody, FIXTURE_DEF).setUserData("player1");
+
                 } else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER2)) {
-                    levelObject = new Sprite(y, x, resourcesManager.player2_region, vbom);
+
+                    levelObject = new Sprite(x, y, resourcesManager.player2_region, vbom);
                     final Body body = PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyDef.BodyType.StaticBody, FIXTURE_DEF);
                     body.setUserData("player2");
                     physicsWorld.registerPhysicsConnector(new PhysicsConnector(levelObject, body, true, false));
+
                 } else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER3)) {
-                    levelObject = new Sprite(y, x, resourcesManager.player3_region, vbom);
+
+                    levelObject = new Sprite(x, y, resourcesManager.player3_region, vbom);
                     final Body body = PhysicsFactory.createBoxBody(physicsWorld, levelObject, BodyDef.BodyType.StaticBody, FIXTURE_DEF);
                     body.setUserData("player3");
                     physicsWorld.registerPhysicsConnector(new PhysicsConnector(levelObject, body, true, false));
-                }
 
-                else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL))
-                {
-                    levelObject = new Sprite(y, x, resourcesManager.football_region, vbom)
-                    {
+                } else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL)) {
+
+                    levelObject = new Sprite(x, y, resourcesManager.football_region, vbom) {
                         @Override
                         protected void onManagedUpdate(float pSecondsElapsed) {
-
                             super.onManagedUpdate(pSecondsElapsed);
-
 //                            if (player.collidesWith(this)) {
 //                                addToScore(10);
 //                                this.setVisible(false);
 //                                this.setIgnoreUpdate(true);
 //                            }
-
-
-                             // TODO
-                             // we will later check if player collide with this (coin)
-                             // and if it does, we will increase score and hide coin
-                             // it will be completed in next articles (after creating player code)
-
                         }
                     };
-                    levelObject.registerEntityModifier(new LoopEntityModifier(new ScaleModifier(1, 1, 1.3f)));
-                }
+                    levelObject.registerEntityModifier(new LoopEntityModifier(new ScaleModifier(1, 1, 1.1f)));
 
-                else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
+                } else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
+
                     player = new Player(x, y, vbom, camera, physicsWorld) {
                         @Override
                         public void onDie() {
@@ -244,8 +218,13 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                                 displayGameOverText();
                             }
                         }
+                        @Override
+                        public void onReachedDestination() {
+
+                        }
                     };
                     levelObject = player;
+
                 } else {
                     throw new IllegalArgumentException();
                 }

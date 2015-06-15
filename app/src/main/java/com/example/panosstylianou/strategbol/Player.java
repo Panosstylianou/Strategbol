@@ -18,24 +18,22 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 public abstract class Player extends AnimatedSprite {
 
     //CONSTRUCTOR
-
     public Player(float pX, float pY, VertexBufferObjectManager vbo, Camera camera, PhysicsWorld physicsWorld) {
         super(pX, pY, ResourcesManager.getInstance().player_region, vbo);
         createPhysics(camera, physicsWorld);
-        camera.setChaseEntity(this);
+        //camera.setChaseEntity(this);
     }
 
-//VARIABLES
-
+    //VARIABLES
     private Body body;
+    private boolean canRun = false;
+    private boolean reachedDestination = false;
 
     public abstract void onDie();
-
-    private boolean canRun = false;
+    public abstract void onReachedDestination();
 
     private void createPhysics(final Camera camera, PhysicsWorld physicsWorld) {
         body = PhysicsFactory.createBoxBody(physicsWorld, this, BodyDef.BodyType.DynamicBody, PhysicsFactory.createFixtureDef(0, 0, 0));
-
         body.setUserData("player");
         body.setFixedRotation(true);
 
@@ -45,8 +43,8 @@ public abstract class Player extends AnimatedSprite {
                 super.onUpdate(pSecondsElapsed);
                 camera.onUpdate(0.1f);
 
-                if (getY() <= 0) {
-                    onDie();
+                if (reachedDestination = true) {
+                    onReachedDestination();
                 }
 
                 if (canRun) {
@@ -58,9 +56,7 @@ public abstract class Player extends AnimatedSprite {
 
     public void setRunning() {
         canRun = true;
-
         final long[] PLAYER_ANIMATE = new long[]{100, 100, 100};
-
         animate(PLAYER_ANIMATE, 0, 2, true);
     }
 
@@ -68,5 +64,13 @@ public abstract class Player extends AnimatedSprite {
         body.setLinearVelocity(new Vector2(body.getLinearVelocity().x, 12));
     }
 
+    public boolean setReachedDestination(boolean newValue) {
+        reachedDestination = newValue;
+        return reachedDestination;
+    }
+
+    public boolean getReachedDestination() {
+        return reachedDestination;
+    }
 
 }

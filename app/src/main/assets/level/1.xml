@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<level width="1000" height="780">
+<level width="480" height="800">
 
-    <entity x="100" y="100" type="player1"/>
-    <entity x="400" y="270" type="player2"/>
-    <entity x="500" y="400" type="player3"/>
-    <entity x="600" y="400" type="football"/>
+    <entity x="100" y="150" type="player1"/>
+    <entity x="240" y="150" type="player2"/>
+    <entity x="380" y="150" type="player3"/>
+    <entity x="240" y="400" type="football"/>
 
 </level>
