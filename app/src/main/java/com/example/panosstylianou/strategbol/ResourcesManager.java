@@ -61,14 +61,10 @@ public class ResourcesManager {
     public ITextureRegion play_region;
     public ITextureRegion pitch_region;
     public ITextureRegion football_region;
-    public ITextureRegion player1_region;
-    public ITextureRegion player2_region;
-    public ITextureRegion player3_region;
     public ITextureRegion musicOn_region;
     public ITextureRegion musicOff_region;
     public ITextureRegion info_region;
-
-    public ITiledTextureRegion player_region;
+    public ITextureRegion player_region;
 
     public void saveData() {
         SharedPreferences config = activity.getSharedPreferences("config", 0); //Create object of SharedPreferences.
@@ -165,11 +161,8 @@ public class ResourcesManager {
         gameTextureAtlas = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
 
         pitch_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "pitch.png");
-        player1_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player1.png");
-        player2_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player1.png");
-        player3_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player1.png");
         football_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "football.png");
-        //player_region = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(gameTextureAtlas, activity, "player.png", 3, 1);
+        player_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player.png");
 
         try {
             this.gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -235,10 +228,7 @@ public class ResourcesManager {
         gameTextureAtlas.unload();
         football_region = null;
         pitch_region = null;
-        player1_region = null;
-        player2_region = null;
-        player3_region = null;
-        //player_region = null;
+        player_region = null;
 
         //font.unload();
         //font = null;
