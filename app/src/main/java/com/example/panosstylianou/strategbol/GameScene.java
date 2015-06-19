@@ -4,54 +4,34 @@ package com.example.panosstylianou.strategbol;
  * Created by panosstylianou on 04/06/15.
  */
 
-import android.widget.Button;
-import android.widget.Toast;
-
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 import org.andengine.engine.camera.Camera;
-import org.andengine.engine.camera.hud.HUD;
-import org.andengine.engine.handler.timer.ITimerCallback;
-import org.andengine.entity.IEntity;
-import org.andengine.entity.modifier.LoopEntityModifier;
-import org.andengine.entity.modifier.ScaleModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.text.Text;
-import org.andengine.entity.text.TextOptions;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
-import org.andengine.extension.physics.box2d.PhysicsConnector;
-import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.util.GLState;
-import org.andengine.util.SAXUtils;
-import org.andengine.util.adt.align.HorizontalAlign;
-import org.andengine.util.level.EntityLoader;
-import org.andengine.util.level.constants.LevelConstants;
-import org.andengine.util.level.simple.SimpleLevelEntityLoaderData;
-import org.andengine.util.level.simple.SimpleLevelLoader;
-import org.xml.sax.Attributes;
-
-import java.io.IOException;
 
 public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     //VARIABLES
-    private Player player;
+    private Player TA_player1;
+    private Player TA_player2;
+    private Player TA_player3;
+    private Player TA_player4;
+    private Player TA_player5;
+
+    private Player TB_player1;
+    private Player TB_player2;
+    private Player TB_player3;
+    private Player TB_player4;
+    private Player TB_player5;
+
     private PhysicsWorld physicsWorld;
-
-    private static final String TAG_ENTITY = "entity";
-    private static final String TAG_ENTITY_ATTRIBUTE_X = "x";
-    private static final String TAG_ENTITY_ATTRIBUTE_Y = "y";
-    private static final String TAG_ENTITY_ATTRIBUTE_TYPE = "type";
-
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL = "football";
-    private static final Object TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER = "player";
 
     @Override
     public void createScene() {
@@ -91,70 +71,76 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private void createBackground() {
         attachChild(new Sprite(240, 400, resourcesManager.pitch_region, vbom) { //Create a new sprite in the middle of the screen for the background
-                @Override
-                protected void preDraw(GLState pGLState, Camera pCamera) {
-                    super.preDraw(pGLState, pCamera);
-                    pGLState.enableDither();
+            @Override
+            protected void preDraw(GLState pGLState, Camera pCamera) {
+                super.preDraw(pGLState, pCamera);
+                pGLState.enableDither();
+            }
+        });
+    }
+
+    private Player createPlayer(float x, float y, Player player, ITextureRegion playerRegion) {
+        player = new Player(x, y, vbom, camera, physicsWorld, playerRegion) {
+            @Override
+            public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
+                if (pSceneTouchEvent.isActionMove()) {
+                    this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
                 }
-            });
+                return true;
+            }
+        };
+        registerTouchArea(player);
+        setTouchAreaBindingOnActionDownEnabled(true);
+        return player;
+    }
+
+    private Sprite createFootball (float x, float y) {
+        final Sprite football;
+        football = new Sprite(x, y, resourcesManager.football_region, vbom) {
+            @Override
+            protected void onManagedUpdate(float pSecondsElapsed) {
+                super.onManagedUpdate(pSecondsElapsed);
+                if (TA_player1.collidesWith(this) || TB_player1.collidesWith(this) || TA_player2.collidesWith(this) || TB_player2.collidesWith(this) || TA_player3.collidesWith(this) || TB_player3.collidesWith(this) || TA_player4.collidesWith(this) || TB_player4.collidesWith(this) || TA_player5.collidesWith(this) || TB_player5.collidesWith(this)) {
+                    this.setVisible(false);
+                    this.setIgnoreUpdate(true);
+                }
+            }
+        };
+        return football;
     }
 
     private void loadGameSprites() {
 
-        final SimpleLevelLoader loader = new SimpleLevelLoader(vbom);
+        Sprite footballSprite;
 
-        loader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(LevelConstants.TAG_LEVEL) {   //The entity where all loaded entities are attached to
-            public IEntity onLoadEntity(final String pEntityName, final IEntity pParent, final Attributes pAttributes, final SimpleLevelEntityLoaderData pSimpleLevelEntityLoaderData) throws IOException {
-                return GameScene.this;
-            }
-        });
+        footballSprite = createFootball(240, 400);
+        TA_player1 = createPlayer(240, 350, TA_player1, ResourcesManager.getInstance().playerA_region);
+        TA_player2 = createPlayer(120, 150, TA_player2, ResourcesManager.getInstance().playerA_region);
+        TA_player3 = createPlayer(150, 300, TA_player3, ResourcesManager.getInstance().playerA_region);
+        TA_player4 = createPlayer(330, 300, TA_player4, ResourcesManager.getInstance().playerA_region);
+        TA_player5 = createPlayer(360, 150, TA_player5, ResourcesManager.getInstance().playerA_region);
 
-        loader.registerEntityLoader(new EntityLoader<SimpleLevelEntityLoaderData>(TAG_ENTITY) {
+        TB_player1 = createPlayer(240, 450, TB_player1, ResourcesManager.getInstance().playerB_region);
+        TB_player2 = createPlayer(120, 650, TB_player2, ResourcesManager.getInstance().playerB_region);
+        TB_player3 = createPlayer(150, 500, TB_player3, ResourcesManager.getInstance().playerB_region);
+        TB_player4 = createPlayer(330, 500, TB_player4, ResourcesManager.getInstance().playerB_region);
+        TB_player5 = createPlayer(360, 650, TB_player5, ResourcesManager.getInstance().playerB_region);
 
-            public IEntity onLoadEntity(final String pEntityName, final IEntity pParent, final Attributes pAttributes, final SimpleLevelEntityLoaderData pSimpleLevelEntityLoaderData) throws IOException {
-                final int x = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_X);
-                final int y = SAXUtils.getIntAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_Y);
-                final String type = SAXUtils.getAttributeOrThrow(pAttributes, TAG_ENTITY_ATTRIBUTE_TYPE);
-                final Sprite object;
 
-                //Parse XML files
-                if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_FOOTBALL)) {
+        this.attachChild(footballSprite);
+        this.attachChild(TA_player1);
+        this.attachChild(TA_player2);
+        this.attachChild(TA_player3);
+        this.attachChild(TA_player4);
+        this.attachChild(TA_player5);
 
-                    object = new Sprite(x, y, resourcesManager.football_region, vbom) {
-                        @Override
-                        protected void onManagedUpdate(float pSecondsElapsed) {
-                            super.onManagedUpdate(pSecondsElapsed);
-                            if (player.collidesWith(this)) {
-                                this.setVisible(false);
-                                this.setIgnoreUpdate(true);
-                            }
-                        }
-                    };
-                    object.registerEntityModifier(new LoopEntityModifier(new ScaleModifier(1, 1, 1.3f)));
+        this.attachChild(TB_player1);
+        this.attachChild(TB_player2);
+        this.attachChild(TB_player3);
+        this.attachChild(TB_player4);
+        this.attachChild(TB_player5);
 
-                } else if (type.equals(TAG_ENTITY_ATTRIBUTE_TYPE_VALUE_PLAYER)) {
 
-                    player = new Player(x, y, vbom, camera, physicsWorld) {
-                        @Override
-                        public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
-                            if (pSceneTouchEvent.isActionDown()) {
-                                this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
-                            }
-                            return true;
-                        }
-                    };
-                    object = player;
-                    registerTouchArea(object);
-                    setTouchAreaBindingOnActionDownEnabled(true);
-
-                } else {
-                    throw new IllegalArgumentException();
-                }
-                object.setCullingEnabled(true);
-                return object;
-            }
-        });
-        loader.loadLevelFromAsset(activity.getAssets(), "level/1.xml");
     }
 
 }

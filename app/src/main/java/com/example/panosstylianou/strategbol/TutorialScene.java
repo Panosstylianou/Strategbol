@@ -33,7 +33,6 @@ public class TutorialScene extends BaseScene {
         createBackground();
         createHUD();
         createMenuChildScene();
-
     }
 
     @Override
@@ -60,7 +59,6 @@ public class TutorialScene extends BaseScene {
         Sprite spriteBG = new Sprite(240, 400, resourcesManager.menu_background_region, vbom);
         attachChild(spriteBG);
         spriteBG.setAlpha(0.7f);
-
     }
 
     private void createHUD() {

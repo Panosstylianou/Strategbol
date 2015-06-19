@@ -64,7 +64,8 @@ public class ResourcesManager {
     public ITextureRegion musicOn_region;
     public ITextureRegion musicOff_region;
     public ITextureRegion info_region;
-    public ITextureRegion player_region;
+    public ITextureRegion playerA_region;
+    public ITextureRegion playerB_region;
 
     public void saveData() {
         SharedPreferences config = activity.getSharedPreferences("config", 0); //Create object of SharedPreferences.
@@ -162,7 +163,8 @@ public class ResourcesManager {
 
         pitch_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "pitch.png");
         football_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "football.png");
-        player_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "player.png");
+        playerA_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "playerA.png");
+        playerB_region = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity, "playerB.png");
 
         try {
             this.gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -228,7 +230,8 @@ public class ResourcesManager {
         gameTextureAtlas.unload();
         football_region = null;
         pitch_region = null;
-        player_region = null;
+        playerA_region = null;
+        playerB_region = null;
 
         //font.unload();
         //font = null;
