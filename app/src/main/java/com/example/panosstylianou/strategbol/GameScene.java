@@ -102,7 +102,16 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
                 super.onManagedUpdate(pSecondsElapsed);
                 for (int i = 1; i < GameScene.this.getChildCount() - 1; i++) { //Get Child Index (Ignore Pitch & Ball Sprite - index 0 & 12)
                     if (GameScene.this.getChildByIndex(i).collidesWith(this)) {
-                        this.setPosition(GameScene.this.getChildByIndex(i).getX(), GameScene.this.getChildByIndex(i).getY());
+
+                        float x = GameScene.this.getChildByIndex(i).getX();
+                        float yUp = GameScene.this.getChildByIndex(i).getY() + GameScene.this.getChildByIndex(i).getHeight()/2;
+                        float yDown = GameScene.this.getChildByIndex(i).getY() - GameScene.this.getChildByIndex(i).getHeight()/2;
+
+                        if (this.getY() - GameScene.this.getChildByIndex(i).getY() > 0) {
+                            this.setPosition(x, yUp);
+                        } else {
+                            this.setPosition(x, yDown);
+                        }
                     }
                 }
             }
@@ -126,19 +135,19 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         TB_player4 = createPlayer(330, 500, TB_player4, ResourcesManager.getInstance().playerB_region);
         TB_player5 = createPlayer(360, 650, TB_player5, ResourcesManager.getInstance().playerB_region);
 
-        this.attachChild(TA_player1);
-        this.attachChild(TA_player2);
-        this.attachChild(TA_player3);
-        this.attachChild(TA_player4);
-        this.attachChild(TA_player5);
+        this.attachChild(TA_player1); //Index 1
+        this.attachChild(TA_player2); //Index 2
+        this.attachChild(TA_player3); //Index 3
+        this.attachChild(TA_player4); //Index 4
+        this.attachChild(TA_player5); //Index 5
 
-        this.attachChild(TB_player1);
-        this.attachChild(TB_player2);
-        this.attachChild(TB_player3);
-        this.attachChild(TB_player4);
-        this.attachChild(TB_player5);
+        this.attachChild(TB_player1); //Index 6
+        this.attachChild(TB_player2); //Index 7
+        this.attachChild(TB_player3); //Index 8
+        this.attachChild(TB_player4); //Index 9
+        this.attachChild(TB_player5); //Index 10
 
-        this.attachChild(footballSprite);
+        this.attachChild(footballSprite); //Index 11
 
     }
 
