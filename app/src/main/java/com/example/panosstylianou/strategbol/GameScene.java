@@ -95,24 +95,24 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     }
 
     private Sprite createFootball (float x, float y) {
-        final Sprite football;
-        football = new Sprite(x, y, resourcesManager.football_region, vbom) {
+        final Sprite ball;
+        ball = new Sprite(x, y, resourcesManager.football_region, vbom) {
             @Override
             protected void onManagedUpdate(float pSecondsElapsed) {
                 super.onManagedUpdate(pSecondsElapsed);
-                if (TA_player1.collidesWith(this) || TB_player1.collidesWith(this) || TA_player2.collidesWith(this) || TB_player2.collidesWith(this) || TA_player3.collidesWith(this) || TB_player3.collidesWith(this) || TA_player4.collidesWith(this) || TB_player4.collidesWith(this) || TA_player5.collidesWith(this) || TB_player5.collidesWith(this)) {
-                    this.setVisible(false);
-                    this.setIgnoreUpdate(true);
+                for (int i = 1; i < GameScene.this.getChildCount() - 1; i++) { //Get Child Index (Ignore Pitch & Ball Sprite - index 0 & 12)
+                    if (GameScene.this.getChildByIndex(i).collidesWith(this)) {
+                        this.setPosition(GameScene.this.getChildByIndex(i).getX(), GameScene.this.getChildByIndex(i).getY());
+                    }
                 }
             }
         };
-        return football;
+        return ball;
     }
 
     private void loadGameSprites() {
 
         Sprite footballSprite;
-
         footballSprite = createFootball(240, 400);
         TA_player1 = createPlayer(240, 350, TA_player1, ResourcesManager.getInstance().playerA_region);
         TA_player2 = createPlayer(120, 150, TA_player2, ResourcesManager.getInstance().playerA_region);
@@ -126,8 +126,6 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         TB_player4 = createPlayer(330, 500, TB_player4, ResourcesManager.getInstance().playerB_region);
         TB_player5 = createPlayer(360, 650, TB_player5, ResourcesManager.getInstance().playerB_region);
 
-
-        this.attachChild(footballSprite);
         this.attachChild(TA_player1);
         this.attachChild(TA_player2);
         this.attachChild(TA_player3);
@@ -140,6 +138,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         this.attachChild(TB_player4);
         this.attachChild(TB_player5);
 
+        this.attachChild(footballSprite);
 
     }
 
