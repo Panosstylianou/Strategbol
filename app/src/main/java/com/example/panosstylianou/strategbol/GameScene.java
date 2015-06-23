@@ -14,6 +14,7 @@ import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.util.GLState;
 
 public class GameScene extends BaseScene implements IOnSceneTouchListener {
@@ -31,6 +32,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
     private Player TB_player4;
     private Player TB_player5;
 
+    private Sprite circle;
     private PhysicsWorld physicsWorld;
 
     @Override
@@ -81,10 +83,18 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private Player createPlayer(float x, float y, Player player, ITextureRegion playerRegion) {
         player = new Player(x, y, vbom, camera, physicsWorld, playerRegion) {
+            float playerX = this.getSceneCenterCoordinates()[0];
+            float playerY = this.getSceneCenterCoordinates()[1];
             @Override
             public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
+                circle.setPosition(playerX, playerY);
+                circle.setVisible(true);
                 if (pSceneTouchEvent.isActionMove()) {
-                    this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+                    if (this.getX() <= (playerX + circle.getWidth() / 2) && this.getY() <= (playerY + circle.getHeight() / 2)) {
+                        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
+                    } else {
+                        this.setIgnoreUpdate(true);
+                    }
                 }
                 return true;
             }
@@ -100,7 +110,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
             @Override
             protected void onManagedUpdate(float pSecondsElapsed) {
                 super.onManagedUpdate(pSecondsElapsed);
-                for (int i = 1; i < GameScene.this.getChildCount() - 1; i++) { //Get Child Index (Ignore Pitch & Ball Sprite - index 0 & 12)
+                for (int i = 1; i < GameScene.this.getChildCount() - 2; i++) { //Get Child Index (Ignore Pitch, Ball & Circle Sprite - index 0 & 11 & 12)
                     if (GameScene.this.getChildByIndex(i).collidesWith(this)) {
 
                         float x = GameScene.this.getChildByIndex(i).getX();
@@ -123,6 +133,10 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
         Sprite footballSprite;
         footballSprite = createFootball(240, 400);
+
+        circle = new Sprite(0, 0, resourcesManager.circle_region, vbom);
+        circle.setVisible(false);
+
         TA_player1 = createPlayer(240, 350, TA_player1, ResourcesManager.getInstance().playerA_region);
         TA_player2 = createPlayer(120, 150, TA_player2, ResourcesManager.getInstance().playerA_region);
         TA_player3 = createPlayer(150, 300, TA_player3, ResourcesManager.getInstance().playerA_region);
@@ -148,6 +162,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         this.attachChild(TB_player5); //Index 10
 
         this.attachChild(footballSprite); //Index 11
+        this.attachChild(circle); //Index 12
 
     }
 

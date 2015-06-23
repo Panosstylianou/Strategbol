@@ -125,13 +125,11 @@ public class MainMenuScene extends BaseScene {
         menuChildScene.buildAnimations();
         menuChildScene.setBackgroundEnabled(false);
 
-        //playMenuItem.setAlpha(0.5f);
-        //tutorialMenuItem.setAlpha(0.5f);
-
         playMenuItem.setPosition(super.getOffsetCenterX(), playMenuItem.getY() - 350);
         tutorialMenuItem.setPosition(super.getOffsetCenterX(), tutorialMenuItem.getY() - 400);
         volumeOnMenuItem.setPosition(super.getOffsetCenterX() - 210, super.getOffsetCenterY() - 370);
         volumeOffMenuItem.setPosition(super.getOffsetCenterX() - 210, super.getOffsetCenterY() - 370);
+
         infoMenuItem.setPosition(super.getOffsetCenterX() + 210, super.getOffsetCenterY() - 370);
 
         menuChildScene.setOnMenuItemClickListener(new MenuScene.IOnMenuItemClickListener() {

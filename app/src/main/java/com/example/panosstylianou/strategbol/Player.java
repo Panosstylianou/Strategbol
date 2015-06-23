@@ -7,11 +7,13 @@ package com.example.panosstylianou.strategbol;
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 import com.badlogic.gdx.math.Vector2;
@@ -37,9 +39,14 @@ public abstract class Player extends Sprite {
         body.setFixedRotation(true);
     }
 
-    public void hasBall() {
-        changePlayerEnergy(-10);
-        //TODO
+    public boolean hasBall() {
+        GameScene gameScene = new GameScene();
+        if (this.collidesWith(gameScene.getChildByIndex(11))) {
+            changePlayerEnergy(-10);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void kick() {
