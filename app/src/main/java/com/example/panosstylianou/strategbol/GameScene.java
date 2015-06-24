@@ -4,6 +4,8 @@ package com.example.panosstylianou.strategbol;
  * Created by panosstylianou on 04/06/15.
  */
 
+import android.view.MotionEvent;
+
 import com.badlogic.gdx.math.Vector2;
 
 import org.andengine.engine.camera.Camera;
@@ -83,18 +85,29 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private Player createPlayer(float x, float y, Player player, ITextureRegion playerRegion) {
         player = new Player(x, y, vbom, camera, physicsWorld, playerRegion) {
-            float playerX = this.getSceneCenterCoordinates()[0];
-            float playerY = this.getSceneCenterCoordinates()[1];
             @Override
             public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
-                circle.setPosition(playerX, playerY);
-                circle.setVisible(true);
-                if (pSceneTouchEvent.isActionMove()) {
-                    if (this.getX() <= (playerX + circle.getWidth() / 2) && this.getY() <= (playerY + circle.getHeight() / 2)) {
-                        this.setPosition(pSceneTouchEvent.getX() - this.getWidth() / 2, pSceneTouchEvent.getY() - this.getHeight() / 2);
-                    } else {
-                        this.setIgnoreUpdate(true);
+
+                int myEventAction = pSceneTouchEvent.getAction();
+                float X = pSceneTouchEvent.getX();
+                float Y = pSceneTouchEvent.getY();
+
+                double distance = (X - circle.getX())*(X - circle.getX()) + (Y - circle.getY()) * (Y - circle.getY());
+                distance = Math.sqrt(distance);
+
+                switch (myEventAction) {
+                    case MotionEvent.ACTION_DOWN:
+                        circle.setPosition(this.getSceneCenterCoordinates()[0], this.getSceneCenterCoordinates()[1]);
+                        circle.setVisible(true);
+                        break;
+                    case MotionEvent.ACTION_MOVE: {
+                        if (distance < circle.getHeight() / 2) {
+                            this.setPosition(X, Y);
+                            break;
+                        }
                     }
+                    case MotionEvent.ACTION_UP:
+                        break;
                 }
                 return true;
             }
