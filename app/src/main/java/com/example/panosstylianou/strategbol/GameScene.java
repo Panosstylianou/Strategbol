@@ -117,7 +117,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         return player;
     }
 
-    private Sprite createFootball (float x, float y) {
+    private Sprite createBall (float x, float y) {
         final Sprite ball;
         ball = new Sprite(x, y, resourcesManager.football_region, vbom) {
             @Override
@@ -144,8 +144,8 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
 
     private void loadGameSprites() {
 
-        Sprite footballSprite;
-        footballSprite = createFootball(240, 400);
+        Sprite ballSprite;
+        ballSprite = createBall(240, 400);
 
         circle = new Sprite(0, 0, resourcesManager.circle_region, vbom);
         circle.setVisible(false);
@@ -174,7 +174,7 @@ public class GameScene extends BaseScene implements IOnSceneTouchListener {
         this.attachChild(TB_player4); //Index 9
         this.attachChild(TB_player5); //Index 10
 
-        this.attachChild(footballSprite); //Index 11
+        this.attachChild(ballSprite); //Index 11
         this.attachChild(circle); //Index 12
 
     }
